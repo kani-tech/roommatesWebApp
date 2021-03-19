@@ -1,14 +1,30 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
+import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
+// Pages
+import registrationScreen from "./pages/registration.jsx"
+
 function App() {
+
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/register" component={registrationScreen} />
+        <Route exact path="404" component={errPage}
+      </Switch>
+    </BrowserRouter>
+  )
+
+
+  /*
   const [email, setEmail] = useState('')
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event) => {
-    console.log(`
+        console.log(`
       firstName: ${firstName}
       lastName: ${lastName}
       Email: ${email}
@@ -16,71 +32,71 @@ function App() {
     `);
 
     const payload = {
-      firstName: firstName,
+        firstName: firstName,
       lastName: lastName,
       Email: email,
       Password: password
     }
 
     axios({
-      url: 'http://localhost:4000/api/register',
+        url: 'http://localhost:4000/api/register',
       method: 'post',
       data: payload
     }).then(() => {
-      console.log('Data received')
-    }).catch(() => {
-      console.log('error')
-    })
+        console.log('Data received')
+      }).catch(() => {
+        console.log('error')
+      })
 
     event.preventDefault();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Create Account</h1>
-      <label>
-        First Name:
+      <form onSubmit={handleSubmit}>
+        <h1>Create Account</h1>
+        <label>
+          First Name:
         <input
-          type="text"
-          name="fName"
-          value={firstName}
-          onChange={e => setfirstName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Last Name:
+            type="text"
+            name="fName"
+            value={firstName}
+            onChange={e => setfirstName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Last Name:
         <input
-          type="text"
-          name="lName"
-          value={lastName}
-          onChange={e => setlastName(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Email:
+            type="text"
+            name="lName"
+            value={lastName}
+            onChange={e => setlastName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Email:
         <input
-          type="text"
-          name="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password:
+            type="text"
+            name="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label>
+          Password:
         <input
-          type="text"
-          name="pass"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button>Submit</button>
-    </form>
-  )
+            type="text"
+            name="pass"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <button>Submit</button>
+      </form>
+  )*/
 }
 
 export default App;
