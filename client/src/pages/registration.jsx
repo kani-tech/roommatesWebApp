@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 function RegistrationScreen() {
-    const [email, setEmail] = useState('')
+
+    // initial state to set state
+    const [email, setEmail] = useState('');
     const [firstName, setfirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [password, setPassword] = useState('');
@@ -61,7 +63,7 @@ function RegistrationScreen() {
             <label>
                 Email:
         <input
-                    type="text"
+                    type="email"
                     name="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
@@ -71,7 +73,7 @@ function RegistrationScreen() {
             <label>
                 Password:
         <input
-                    type="text"
+                    type="password"
                     name="pass"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
