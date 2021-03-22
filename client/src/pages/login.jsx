@@ -59,25 +59,7 @@ const LoginPage = () => {
 
         )
     }
-    /* 
-    if (user) {
-        return (
-            <div>
-                {user.name} is logged in
-                <button onClick={handleLogout}>logout</button>
-            </div>
-        );
-    }
- */
-
-
-
-    /*if (user) {
-        <Route exact path="/login" >
-            <Redirect to="/dashboard" />
-        </Route>
-        //return <div> {user.name} is logged in </div>
-    }*/
+    
 
     return (
         <div>
