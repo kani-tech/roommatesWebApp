@@ -24,13 +24,6 @@ const LoginPage = ({ setToken }) => {
         console.log(response.data)
     }
 
-    /*  useEffect(() => {
-          const loggedInUser = localStorage.getItem("user");
-          if (loggedInUser) {
-              const foundUser = JSON.parse(loggedInUser);
-              setUser(foundUser);
-          }
-      }, []);*/
 
 
     if (user) {
