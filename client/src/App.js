@@ -6,12 +6,11 @@ import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import registrationScreen from "./pages/registration.jsx"
 import homePage from "./pages/home.jsx"
 import Errpage from "./pages/errpage.jsx"
-import LoginPage from "./pages/login.js"
+import LoginPage from "./pages/login.jsx"
 import Dashboard from "./pages/dashboard.jsx"
 
 
 function App() {
-  const [token, setToken] = useState('')
 
   return (
     <BrowserRouter>
