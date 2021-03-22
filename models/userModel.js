@@ -7,6 +7,7 @@ const registerSchema = new Schema({
     lastName: String,
     email: String,
     password: String,
+    // room ?
 })
 
 const user = mongoose.model('User', registerSchema);
