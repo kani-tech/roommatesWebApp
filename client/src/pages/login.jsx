@@ -6,6 +6,10 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import dashboard from "/Users/kanishksk/Documents/roomatesV3/client/src/pages/dashboard.jsx"
 import Errpage from "/Users/kanishksk/Documents/roomatesV3/client/src/pages/errpage.jsx"
+import '../stylesheets/login.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 // Pagesß
 
 const LoginPage = () => {
@@ -41,6 +45,8 @@ const LoginPage = () => {
         if (response.data.token == 1234) {
             setUser(response.data)
             localStorage.setItem("user", JSON.stringify(response.data));
+        } else {
+            alert("Invalid email or password")
         }
 
         console.log(response.data.token);
@@ -59,33 +65,59 @@ const LoginPage = () => {
 
         )
     }
-    
+    /* 
+    if (user) {
+        return (
+            <div>
+                {user.name} is logged in
+                <button onClick={handleLogout}>logout</button>
+            </div>
+        );
+    }
+ */
+
+
+
+    /*if (user) {
+        <Route exact path="/login" >
+            <Redirect to="/dashboard" />
+        </Route>
+        //return <div> {user.name} is logged in </div>
+    }*/
 
     return (
-        <div>
+        <div className="form-signin">
             <form onSubmit={handleSubmit}>
                 <h1>Log in here</h1>
-                <label>
-                    Email:
+                <div className="form-floating">
+                    <label>
+                        Email:
                 <input
-                        type="text"
-                        name="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password:
+                            type="text"
+                            name="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </label>
+                </div>
+
+                <div className="form-floating">
+                    <label>
+                        Password:
                 <input
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                <button>Submit</button>
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </label>
+                </div>
+
+                <button className="w-100 btn btn-lg btn-primary">Submit</button>
             </form>
         </div>
     )
