@@ -22,6 +22,7 @@ const PORT = process.env.PORT || 4000
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
+// Provide permission for server
 app.use(cors())
 app.use('/api', userRouter)
 
