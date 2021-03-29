@@ -11,7 +11,9 @@ import Dashboard from "./pages/dashboard.jsx"
 
 
 function App() {
-
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
+  </head>
   return (
     <BrowserRouter>
       <Switch>

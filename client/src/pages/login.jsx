@@ -86,40 +86,43 @@ const LoginPage = () => {
     }*/
 
     return (
-        <div className="form-signin">
-            <form onSubmit={handleSubmit}>
-                <h1>Log in here</h1>
-                <div className="form-floating">
-                    <label>
-                        Email:
+        <div className="main-body">
+            <div className="form-signin">
+                <form onSubmit={handleSubmit}>
+                    <h1>Log in here</h1>
+                    <div className="form-floating">
+                        <label>
+                            Email:
                 <input
-                            type="text"
-                            name="email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                            className="form-control"
-                            required
-                        />
-                    </label>
-                </div>
+                                type="text"
+                                name="email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </label>
+                    </div>
 
-                <div className="form-floating">
-                    <label>
-                        Password:
+                    <div className="form-floating">
+                        <label>
+                            Password:
                 <input
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            className="form-control"
-                            required
-                        />
-                    </label>
-                </div>
+                                type="password"
+                                name="password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                className="form-control"
+                                required
+                            />
+                        </label>
+                    </div>
 
-                <button className="w-100 btn btn-lg btn-primary">Submit</button>
-            </form>
+                    <button className="w-100 btn btn-lg btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
+
     )
 
 
