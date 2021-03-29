@@ -35,7 +35,6 @@ function Dashboard() {
             </Link>
         </div>
     )
-
 }
 
 export default Dashboard
