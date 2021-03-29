@@ -27,8 +27,6 @@ const MyNavBar = () => (
             </Form>
         </Navbar.Collapse>
     </Navbar>
-
-
 )
 
 export default MyNavBar
