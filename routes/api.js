@@ -20,7 +20,7 @@ userRouter.get('/', function (req, res) {
         .catch((error) => console.log(error));
 })
 
-userRouter.post('/register', function (req, res) {
+userRouter.post('/register', async function (req, res) {
     console.log('Body:', req.body)
     console.log('Password', req.body.Password)
     res.json({
@@ -28,6 +28,9 @@ userRouter.post('/register', function (req, res) {
     });
 
     try {
+        let existEmail = await user.findOne({ email: req.body.Email });
+        if (existEmail) return res.status(400).send('user already registered!');
+
         const newUser = new user({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
@@ -35,10 +38,8 @@ userRouter.post('/register', function (req, res) {
             password: req.body.Password
         })
 
-        //let user = await user.findOne({ email: email };
-        //if (user) return res.status(400).send("User already registered.");
+        newUser.save()
 
-        newUser.save();
     } catch (err) {
         console.log(err);
         res.status(500).send("Something went wrong");
@@ -46,15 +47,22 @@ userRouter.post('/register', function (req, res) {
 });
 
 userRouter.post('/login', function (req, res) {
-    const email = req.body.Email;
-    const password = req.body.Password
+    const email = req.body.email;
+    const password = req.body.password;
+    const body = req.body;
+    console.log(email)
+    console.log(body)
+    console.log(password)
     user.findOne({ email: email }, function (err, foundUser) {
         console.log(foundUser);
         if (err) {
             console.log(err)
         } else if (foundUser.password == password) {
+            console.log(1)
             res.send({
-                token: USER_LOGIN_SUCCESS
+                token: USER_LOGIN_SUCCESS,
+                email: email,
+                name: foundUser.firstName
             })
         } else {
             res.send({
