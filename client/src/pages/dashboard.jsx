@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
+import MyNavBar from '../components/navbar.jsx'
+import Navbar from 'react-bootstrap/Navbar'
+import { Form, Button, FormControl, Nav, NavDropdown } from 'react-bootstrap'
+
 function Dashboard() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [user, setUser] = useState();
 
-    function getinfo() {
-        return localStorage.getItem('user')
-
-    }
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
         setEmail(currUser.email);
@@ -28,13 +28,14 @@ function Dashboard() {
     };
     return (
         <div>
-            <h1> Welcome to da HUB {user}</h1>
+            <MyNavBar />
+            <h1> Welcome to da HUB {user} </h1>
             <Link to="/">
                 <button onClick={handleLogout}>logout</button>
             </Link>
         </div>
-
     )
+
 }
 
 export default Dashboard

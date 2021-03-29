@@ -8,6 +8,7 @@ import homePage from "./pages/home.jsx"
 import Errpage from "./pages/errpage.jsx"
 import LoginPage from "./pages/login.jsx"
 import Dashboard from "./pages/dashboard.jsx"
+import EnterRoomKey from "./pages/pageafterregister.jsx"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/register" component={registrationScreen} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/roomKeyPage" component={EnterRoomKey} />
         <Route component={Errpage} />
         <Redirect to="/404" />
       </Switch>

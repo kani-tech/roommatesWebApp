@@ -34,6 +34,7 @@ function RegistrationScreen() {
             console.log('error')
         })
 
+
         event.preventDefault();
     }
 
@@ -78,7 +79,7 @@ function RegistrationScreen() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
-                    required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
+                //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
                 />
             </label>
             <button>Submit</button>
