@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import '../stylesheets/home.css'
-//import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 // Pages
 
 /* const homePage = () => {
@@ -32,37 +32,33 @@ import '../stylesheets/home.css'
 const homePage = () => {
 
     return (
-        <div class="text-center home-body">
-            <div class="dub">
-                <header class="masthead mb-auto">
-                    <div class="inner">
-                    </div>
-                </header>
+        <div class="home-body" id="box_home">
 
-                <main role="main" class="inner cover">
-                    <h1 class="cover-heading">Roomates.</h1>
-                    <p class="lead">Stay connected.</p>
 
-                    <p class="lead">
-                        <Link to="/login">
-                            <button type="button" class="btn btn-lg btn-secondary" id="log_btn">
-                                Login
-     </button>
-                        </Link>
-                        <Link to="/register">
-                            <button type="button" class="btn btn-lg btn-secondary" id="reg_btn">
-                                Register
-                </button>
-                        </Link>
-                    </p>
-                </main>
+            <main role="main" class="inner cover">
+                <h1 class="cover-heading">Roomates.</h1>
+                <p class="lead">Stay connected.</p>
 
-                <footer class="mastfoot mt-auto">
-                    <div class="inner">
+                <p class="lead">
+                    <Link to="/login">
+                        <button type="button" class="btn btn-lg btn-secondary" id="log_btn">
+                            Login
+                            </button>
+                    </Link>
+                    <Link to="/register">
+                        <button type="button" class="btn btn-lg btn-secondary" id="reg_btn">
+                            Register
+                            </button>
+                    </Link>
+                </p>
+            </main>
 
-                    </div>
-                </footer>
-            </div>
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+
+                </div>
+            </footer>
+
         </div >
 
     )

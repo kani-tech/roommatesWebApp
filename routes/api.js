@@ -54,19 +54,39 @@ userRouter.post('/roomKeyPage', async function (req, res) {
     console.log('Body:', req.body)
     user.updateOne({ email: req.body.email }, { roomKey: req.body.roomKey }, function (err) {
         if (err) {
-            console.log('error123');
-            // res.send({
-            //     token: USER_LOGIN_FAIL
-            // })
+            res.send({
+                token: USER_LOGIN_FAIL
+            })
         } else {
             console.log('Success');
-            // res.send({
-            //     token: USER_LOGIN_SUCCESS,
-            //     roomKey: req.body.roomKey
-            //})
+            res.send({
+                token: USER_LOGIN_SUCCESS,
+                roomKey: req.body.roomKey
+            })
         }
     });
 });
+
+
+userRouter.post('/dashboard', async function (req, res) {
+    console.log(req.body)
+    const sendKey = req.body.roomKey
+
+    user.find({ roomKey: sendKey }, await function (err, foundMates) {
+        console.log(foundMates)
+        if (err) {
+            res.send({
+                token: USER_LOGIN_FAIL
+            })
+        } else {
+            console.log(foundMates);
+            res.send({
+                token: USER_LOGIN_SUCCESS,
+                roommates: foundMates,
+            })
+        }
+    })
+})
 
 userRouter.post('/login', function (req, res) {
     const email = req.body.email;
@@ -84,7 +104,8 @@ userRouter.post('/login', function (req, res) {
             res.send({
                 token: USER_LOGIN_SUCCESS,
                 email: email,
-                name: foundUser.firstName
+                name: foundUser.firstName,
+                roomKey: foundUser.roomKey
             })
         } else {
             res.send({

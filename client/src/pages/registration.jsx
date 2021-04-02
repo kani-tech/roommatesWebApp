@@ -61,54 +61,58 @@ function RegistrationScreen() {
 
     return (
 
-        <form onSubmit={handleSubmit}>
-            <h1>Create Account</h1>
-            <label>
-                First Name:
+        <div>
+            <form onSubmit={handleSubmit}>
+                <h1>Create Account</h1>
+                <label>
+                    First Name:
         <input
-                    type="text"
-                    name="fName"
-                    value={firstName}
-                    onChange={e => setfirstName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Last Name:
+                        type="text"
+                        name="fName"
+                        value={firstName}
+                        onChange={e => setfirstName(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Last Name:
         <input
-                    type="text"
-                    name="lName"
-                    value={lastName}
-                    onChange={e => setlastName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Email:
+                        type="text"
+                        name="lName"
+                        value={lastName}
+                        onChange={e => setlastName(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Email:
         <input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password:
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Password:
         <input
-                    type="password"
-                    name="pass"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
-                />
-            </label>
+                        type="password"
+                        name="pass"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                    //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
+                    />
+                </label>
 
-            <button type="submit">
-                Submit
+                <button type="submit">
+                    Submit
                 </button>
-        </form>
+            </form>
+            <h1>Click <Link to="/login"> here </Link>  to login if you have an account</h1>
+        </div>
+
 
 
     )
