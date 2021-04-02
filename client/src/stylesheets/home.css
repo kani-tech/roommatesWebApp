@@ -1,10 +1,20 @@
+/*
+ * Globals
+ */
 
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
+
+/* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
   color: #333;
   text-shadow: none; /* Prevent inheritance from `body` */
-  background-color: #fff;
   border: .05rem solid #fff;
 }
 
@@ -14,27 +24,44 @@
  */
 
 html,
-.home-body {
+body {
   height: 100%;
-  width: 100%;
-  
+  background-color: #333 !important;
+  background-size: cover;
+}
+
+#root {
+  padding-top: 5%;
+  padding-right: -20%;
 }
 
 .home-body {
+  height: 100%;
+  margin: auto !important;
+  padding-top: 50%;
+  background-color: white;
+  width: 200%;
+  
+}
+
+
+body {
   display: -ms-flexbox;
   display: -webkit-box;
   display: flex;
   -ms-flex-pack: center;
   -webkit-box-pack: center;
   justify-content: center;
-  background-color: #333;
-  color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
 
 .cover-container {
   max-width: 42em;
+}
+
+#reg_btn {
+  padding-right: 10%;
 }
 
 
@@ -66,10 +93,7 @@ html,
   margin-left: 1rem;
 }
 
-.nav-masthead .active {
-  color: #fff;
-  border-bottom-color: #fff;
-}
+
 
 @media (min-width: 48em) {
   .masthead-brand {

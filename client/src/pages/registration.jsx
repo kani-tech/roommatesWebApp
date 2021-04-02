@@ -11,6 +11,7 @@ function RegistrationScreen() {
     const [password, setPassword] = useState('');
     const [user, setUser] = useState('');
 
+
     const handleSubmit = async event => {
         event.preventDefault();
         console.log(`
@@ -44,65 +45,74 @@ function RegistrationScreen() {
         if (response.data.token == 1234) {
             console.log(response.data.token)
             setUser(response.data);
-            localStorage.setItem("user", JSON.stringify(response.data));
+            localStorage.setItem("user", JSON.stringify(payload));
+            console.log("redirect")
+
+
         } else if (response.data.token == 4321) {
             console.log(response.data.token)
             alert("Oops, that email already exists!");
         }
     }
 
-    if (email) {
-        return (
-            <form onSubmit={handleSubmit}>
-                <h1>Create Account</h1>
-                <label>
-                    First Name:
-        <input
-                        type="text"
-                        name="fName"
-                        value={firstName}
-                        onChange={e => setfirstName(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Last Name:
-        <input
-                        type="text"
-                        name="lName"
-                        value={lastName}
-                        onChange={e => setlastName(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Email:
-        <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password:
-        <input
-                        type="password"
-                        name="pass"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
-                    />
-                </label>
-
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-        )
+    if (user) {
+        return <Redirect to="/roomKeyPage"></Redirect>
     }
+
+    return (
+
+        <form onSubmit={handleSubmit}>
+            <h1>Create Account</h1>
+            <label>
+                First Name:
+        <input
+                    type="text"
+                    name="fName"
+                    value={firstName}
+                    onChange={e => setfirstName(e.target.value)}
+                    required
+                />
+            </label>
+            <label>
+                Last Name:
+        <input
+                    type="text"
+                    name="lName"
+                    value={lastName}
+                    onChange={e => setlastName(e.target.value)}
+                    required
+                />
+            </label>
+            <label>
+                Email:
+        <input
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                />
+            </label>
+            <label>
+                Password:
+        <input
+                    type="password"
+                    name="pass"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    required
+                //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
+                />
+            </label>
+
+            <button type="submit">
+                Submit
+                </button>
+        </form>
+
+
+    )
+}/*
     return (
         <form onSubmit={handleSubmit}>
             <h1>Create Account</h1>
@@ -149,9 +159,9 @@ function RegistrationScreen() {
             </label>
             <button type="button">
                 Submit
-        </button>
+    </button>
         </form>
     )
-}
+}*/
 
 export default RegistrationScreen;
