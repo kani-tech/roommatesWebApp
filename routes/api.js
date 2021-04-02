@@ -51,12 +51,10 @@ userRouter.post('/register', async function (req, res) {
 });
 
 userRouter.post('/roomKeyPage', async function (req, res) {
-    res.json({
-        msg: 'Data received'
-    });
-    user.updateOne({ email: currUser.email }, { roomKey: req.body.roomKey }, function (err) {
+    console.log('Body:', req.body)
+    user.updateOne({ email: req.body.email }, { roomKey: req.body.roomKey }, function (err) {
         if (err) {
-            console.log('error');
+            console.log('error123');
             // res.send({
             //     token: USER_LOGIN_FAIL
             // })
