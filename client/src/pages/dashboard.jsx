@@ -11,12 +11,16 @@ function Dashboard() {
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
-        setEmail(currUser.email);
-        setUser(currUser.name)
+        if (currUser != null) {
+            setEmail(currUser.email);
+            setUser(currUser.name);
+        } else {
+            setUser(null)
+        }
         //console.log(currUser)
     }, 10);
 
-    console.log(email)
+    console.log(user)
 
     //console.log(currUser.email)
     //let newEmail = obj.email
@@ -26,15 +30,23 @@ function Dashboard() {
         setPassword("");
         localStorage.clear();
     };
-    return (
-        <div>
-            <MyNavBar />
-            <h1> Welcome to da HUB {user} </h1>
-            <Link to="/">
-                <button onClick={handleLogout}>logout</button>
-            </Link>
-        </div>
-    )
+    if (user === null) {
+        return (
+            <Redirect to="/" />
+        )
+
+    } else {
+        return (
+            <div>
+                <MyNavBar />
+                <h1> Welcome to da HUB {user} </h1>
+                <Link to="/">
+                    <button onClick={handleLogout}>logout</button>
+                </Link>
+            </div>
+        )
+    }
+
 }
 
 export default Dashboard

@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 
 function RegistrationScreen() {
-
+    //<Link to="/roomKeyPage"></Link>
     // initial state to set state
     const [email, setEmail] = useState('');
     const [firstName, setfirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [password, setPassword] = useState('');
+    const [user, setUser] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async event => {
+        event.preventDefault();
         console.log(`
       firstName: ${firstName}
       lastName: ${lastName}
@@ -24,26 +27,88 @@ function RegistrationScreen() {
             Password: password
         }
 
-        axios({
+        const response = await axios({
             url: 'http://localhost:4000/api/register',
             method: 'post',
             data: payload
-        }).then(() => {
-            console.log('Data received')
-        }).catch(() => {
-            console.log('error')
         })
+        //}).then(() => {
+        //     console.log('Data received')
+        // }).catch(() => {
+        //     console.log('error')
+        // })
+
+        console.log(response)
 
 
-        event.preventDefault();
+        if (response.data.token == 1234) {
+            console.log(response.data.token)
+            setUser(response.data);
+            localStorage.setItem("user", JSON.stringify(response.data));
+        } else if (response.data.token == 4321) {
+            console.log(response.data.token)
+            alert("Oops, that email already exists!");
+        }
     }
 
+    if (email) {
+        return (
+            <form onSubmit={handleSubmit}>
+                <h1>Create Account</h1>
+                <label>
+                    First Name:
+        <input
+                        type="text"
+                        name="fName"
+                        value={firstName}
+                        onChange={e => setfirstName(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Last Name:
+        <input
+                        type="text"
+                        name="lName"
+                        value={lastName}
+                        onChange={e => setlastName(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Email:
+        <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Password:
+        <input
+                        type="password"
+                        name="pass"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                    //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
+                    />
+                </label>
+
+                <button type="submit">
+                    Submit
+                </button>
+            </form>
+        )
+    }
     return (
         <form onSubmit={handleSubmit}>
             <h1>Create Account</h1>
             <label>
                 First Name:
-        <input
+<input
                     type="text"
                     name="fName"
                     value={firstName}
@@ -53,7 +118,7 @@ function RegistrationScreen() {
             </label>
             <label>
                 Last Name:
-        <input
+<input
                     type="text"
                     name="lName"
                     value={lastName}
@@ -63,7 +128,7 @@ function RegistrationScreen() {
             </label>
             <label>
                 Email:
-        <input
+<input
                     type="email"
                     name="email"
                     value={email}
@@ -73,7 +138,7 @@ function RegistrationScreen() {
             </label>
             <label>
                 Password:
-        <input
+<input
                     type="password"
                     name="pass"
                     value={password}
@@ -82,7 +147,9 @@ function RegistrationScreen() {
                 //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
                 />
             </label>
-            <button>Submit</button>
+            <button type="button">
+                Submit
+        </button>
         </form>
     )
 }

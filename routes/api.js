@@ -23,27 +23,51 @@ userRouter.get('/', function (req, res) {
 userRouter.post('/register', async function (req, res) {
     console.log('Body:', req.body)
     console.log('Password', req.body.Password)
-    res.json({
-        msg: 'Data received'
-    });
 
     try {
         let existEmail = await user.findOne({ email: req.body.Email });
-        if (existEmail) return res.status(400).send('user already registered!');
+        if (existEmail) {
+            res.send({
+                token: USER_LOGIN_FAIL
+            })
+            return
+        } else {
+            res.send({
+                token: USER_LOGIN_SUCCESS
+            })
+            const newUser = new user({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.Email,
+                password: req.body.Password
+            })
 
-        const newUser = new user({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.Email,
-            password: req.body.Password
-        })
-
-        newUser.save()
-
+            newUser.save()
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send("Something went wrong");
     }
+});
+
+userRouter.post('/roomKeyPage', async function (req, res) {
+    res.json({
+        msg: 'Data received'
+    });
+    user.updateOne({ email: currUser.email }, { roomKey: req.body.roomKey }, function (err) {
+        if (err) {
+            console.log('error');
+            // res.send({
+            //     token: USER_LOGIN_FAIL
+            // })
+        } else {
+            console.log('Success');
+            // res.send({
+            //     token: USER_LOGIN_SUCCESS,
+            //     roomKey: req.body.roomKey
+            //})
+        }
+    });
 });
 
 userRouter.post('/login', function (req, res) {

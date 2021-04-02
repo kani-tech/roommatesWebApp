@@ -6,11 +6,11 @@ import PropTypes from 'prop-types';
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import dashboard from "/Users/kanishksk/Documents/roomatesV3/client/src/pages/dashboard.jsx"
 import Errpage from "/Users/kanishksk/Documents/roomatesV3/client/src/pages/errpage.jsx"
-import '../stylesheets/login.css'
+//import '../stylesheets/login.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-// Pagesß
+// Pages
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -42,15 +42,16 @@ const LoginPage = () => {
             data: user
         })
 
+        console.log(response.data)
+
         if (response.data.token == 1234) {
             setUser(response.data)
+            console.log(user)
+
             localStorage.setItem("user", JSON.stringify(response.data));
         } else {
             alert("Invalid email or password")
         }
-
-        console.log(response.data.token);
-
     }
 
     if (user) {
@@ -103,7 +104,9 @@ const LoginPage = () => {
                 </form>
             </div>
         </div>
+
     )
+
 }
 
 
