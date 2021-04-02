@@ -1,20 +1,19 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-
 function EnterRoomKey() {
     const [roomKey, setRoomKey] = useState('')
-    const [email, setEmail] = useState('')
     const [user, setUser] = useState('');
+    const [email, setEmail] = useState('')
 
+    
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
         setEmail(currUser.Email);
     }, 10);
 
     console.log(email);
-
-
+    
     const handleSubmit = async event => {
 
         const response = await axios({
@@ -30,6 +29,7 @@ function EnterRoomKey() {
         event.preventDefault();
     }
 
+    
     return (
         <form onSubmit={2}>
             <h1>Enter Your RoomKey</h1>
