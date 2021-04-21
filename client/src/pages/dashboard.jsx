@@ -4,6 +4,7 @@ import MyNavBar from '../components/navbar.jsx'
 import Navbar from 'react-bootstrap/Navbar'
 import { Form, Button, FormControl, Nav, NavDropdown } from 'react-bootstrap'
 import axios from 'axios'
+import Table from 'react-bootstrap/Table'
 
 function Dashboard() {
     const [email, setEmail] = useState('');
@@ -45,15 +46,19 @@ function Dashboard() {
         getInfo();
     }, [roomKey]);
 
-    useEffect(() => {
-        for (let i = 0; i < roomies.length; i++) {
-            console.log(roomies[i])
-        }
-    }, [roomies])
+    const renderUser = (mates, index) => {
+        return (
+            <tr key={index}>
+                <td>{mates.firstName}</td>
+                <td>{mates.lastName}</td>
+                <td>{mates.email}</td>
+            </tr>
+        )
+    }
 
-    useEffect(() => {
-        return "dun"
-    }, [roomies])
+
+
+
     // console.log(roomies)
 
 
@@ -74,6 +79,18 @@ function Dashboard() {
             <div>
                 <MyNavBar />
                 <h1> Welcome to da HUB {user} with Room Key: {roomKey}</h1>
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Last Name</th>
+                            <th>Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {roomies.map(renderUser)}
+                    </tbody>
+                </Table>
                 <Link to="/">
                     <button onClick={handleLogout}>logout</button>
                 </Link>
