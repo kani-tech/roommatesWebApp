@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
 import Navbar from 'react-bootstrap/Navbar'
@@ -10,7 +10,7 @@ function Dashboard() {
     const [password, setPassword] = useState('');
     const [user, setUser] = useState('');
     const [roomKey, setRoomKey] = useState('')
-    const [roomies, setRoomies] = useState('')
+    const [roomies, setRoomies] = useState([])
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -21,47 +21,39 @@ function Dashboard() {
         } else {
             setUser(null)
         }
+    }, 1);
 
-        //setRoomies(response.data.roomates)
-        //console.log(currUser)
-    }, 10);
-    //console.log(user)
+    useEffect(() => {
+        if (!roomKey) {
+            return;
+        }
 
-    //.then(res => console.log(res.data.roommates[0]))
-    //console.log(response.data.roommates[0])
-    //setRoomies(response.data.roommates);
+        const payload = {
+            roomKey: roomKey
+        }
+        async function getInfo() {
+            const response = await axios({
+                url: 'http://localhost:4000/api/dashboard',
+                method: 'post',
+                data: payload
+            })
+
+            // console.log(response.data.roommates)
+            setRoomies(response.data.roommates)
+
+        }
+        getInfo();
+    }, [roomKey]);
+
+    useEffect(() => {
+        for (let i = 0; i < roomies.length; i++) {
+            console.log(roomies[i])
+        }
+    }, [roomies])
+
+    // console.log(roomies)
 
 
-    const payload = {
-        roomKey: roomKey
-    }
-    setTimeout(async function () {
-        const response = await axios({
-            url: 'http://localhost:4000/api/dashboard',
-            method: 'post',
-            data: payload
-        })
-
-        console.log(response)
-    }, 50)
-
-    //console.log(response);
-    //console.log(response)
-    /*async function woop() {
-        const response = await axios({
-            url: 'http://localhost:4000/api/dashboard',
-            method: 'post',
-            data: payload
-        })
-    
-        setRoomies(response.data.roommates);
-    }
-    woop()*/
-    console.log(roomies);
-    //console.log(woop())
-    //console.log(mates)
-    //console.log(currUser.email)
-    //let newEmail = obj.email
     const handleLogout = () => {
         setUser({});
         setEmail("");
