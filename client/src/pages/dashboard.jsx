@@ -51,6 +51,9 @@ function Dashboard() {
         }
     }, [roomies])
 
+    useEffect(() => {
+        return "dun"
+    }, [roomies])
     // console.log(roomies)
 
 
