@@ -39,7 +39,7 @@ function Dashboard() {
                 data: payload
             })
 
-            // console.log(response.data.roommates)
+            console.log(response.data.roommates)
             setRoomies(response.data.roommates)
 
         }
