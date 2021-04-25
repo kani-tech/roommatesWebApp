@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ToDoItem from "../components/todoitem.jsx";
 import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
+import MyNavBar from '../components/navbar.jsx'
 
 function ChoresTDL() {
     const [inputText, setInputText] = useState("");
@@ -103,6 +104,7 @@ function ChoresTDL() {
 
     return (
         <div className="container">
+            <MyNavBar />
             <div className="heading">
                 <h1>To-Do List</h1>
             </div>
