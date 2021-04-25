@@ -3,6 +3,8 @@ const express = require('express')
 const userRouter = express.Router()
 
 const user = require('../models/userModel.js')
+const tdlModel = require('../models/tdl.js')
+
 
 const USER_LOGIN_SUCCESS = 1234;
 const USER_LOGIN_FAIL = 4321;
@@ -111,6 +113,45 @@ userRouter.post('/login', function (req, res) {
             res.send({
                 token: USER_LOGIN_FAIL
             })
+        }
+    })
+})
+
+userRouter.post('/chores', function (req, res) {
+    const roomkey = req.body.roomKey;
+    const newItem = new tdlModel({
+        Item: req.body.item,
+        roomKey: roomkey
+    });
+    newItem.save()
+})
+
+userRouter.post('/choresdisplay', async function (req, res) {
+    const roomkey = req.body.roomkey;
+    console.log(roomkey)
+    tdlModel.find({ roomKey: roomkey }, await function (err, foundMates) {
+        console.log(foundMates)
+        if (err) {
+            res.send({
+                token: USER_LOGIN_FAIL
+            })
+        } else {
+            console.log(foundMates);
+            res.send({
+                token: USER_LOGIN_SUCCESS,
+                items: foundMates,
+            })
+        }
+    })
+})
+
+userRouter.post('/choresdelete', async function (req, res) {
+    const id = req.body.itemID;
+    tdlModel.findByIdAndRemove(id, function (err, docs) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('removed', docs)
         }
     })
 })
