@@ -4,7 +4,8 @@ const userRouter = express.Router()
 
 const user = require('../models/userModel.js')
 const tdlModel = require('../models/tdl.js')
-
+const requestModel = require('../models/requestModel.js')
+const choreModel = require('../models/chores.js')
 
 const USER_LOGIN_SUCCESS = 1234;
 const USER_LOGIN_FAIL = 4321;
@@ -117,7 +118,7 @@ userRouter.post('/login', function (req, res) {
     })
 })
 
-userRouter.post('/chores', function (req, res) {
+userRouter.post('/toDo', function (req, res) {
     const roomkey = req.body.roomKey;
     const newItem = new tdlModel({
         Item: req.body.item,
@@ -126,7 +127,7 @@ userRouter.post('/chores', function (req, res) {
     newItem.save()
 })
 
-userRouter.post('/choresdisplay', async function (req, res) {
+userRouter.post('/toDoDisplay', async function (req, res) {
     const roomkey = req.body.roomkey;
     console.log(roomkey)
     tdlModel.find({ roomKey: roomkey }, await function (err, foundMates) {
@@ -145,7 +146,7 @@ userRouter.post('/choresdisplay', async function (req, res) {
     })
 })
 
-userRouter.post('/choresdelete', async function (req, res) {
+userRouter.post('/toDoDelete', async function (req, res) {
     const id = req.body.itemID;
     tdlModel.findByIdAndRemove(id, function (err, docs) {
         if (err) {
@@ -154,4 +155,63 @@ userRouter.post('/choresdelete', async function (req, res) {
             console.log('removed', docs)
         }
     })
+})
+
+userRouter.post('/addrequest', async function (req, res) {
+    const roomkey = req.body.roomkey
+    const title = req.body.title;
+    const request = req.body.request;
+
+    const addRequest = new requestModel({
+        roomKey: roomkey,
+        title: title,
+        request: request,
+    });
+
+    addRequest.save()
+})
+
+userRouter.post('/getcomplaints', async function (req, res) {
+    const roomkey = req.body.roomkey
+    console.log("roomkey", roomkey)
+    requestModel.find({ roomKey: roomkey }, await function (err, foundRequests) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(foundRequests)
+            res.send({
+                token: USER_LOGIN_SUCCESS,
+                requests: foundRequests
+            })
+        }
+    })
+})
+
+userRouter.post('/choresDisplay', async function (req, res) {
+    const roomkey = req.body.roomkey;
+    console.log(roomkey);
+    choreModel.find({ roomKey: roomkey }, await function (err, foundMates) {
+        console.log(foundMates)
+        if (err) {
+            res.send({
+                token: USER_LOGIN_FAIL
+            })
+        } else {
+            console.log(foundMates);
+            res.send({
+                token: USER_LOGIN_SUCCESS,
+                items: foundMates,
+            })
+        }
+    })
+})
+
+userRouter.post('/chore', function (req, res) {
+    const roomkey = req.body.roomKey;
+    const newItem = new choreModel({
+        Item: req.body.item,
+        Name: req.body.name,
+        roomKey: roomkey
+    });
+    newItem.save()
 })
