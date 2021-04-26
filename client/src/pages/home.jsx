@@ -36,21 +36,23 @@ const homePage = () => {
 
 
             <main role="main" class="inner cover">
-                <h1 class="cover-heading">Roomates.</h1>
-                <p class="lead">Stay connected.</p>
+                <div class="text">
+                    <h1 class="cover-heading">Roomates</h1>
+                    <p class="lead">Bringing students together.</p>
+                </div>
 
-                <p class="lead">
-                    <Link to="/login">
-                        <button type="button" class="btn btn-lg btn-secondary" id="log_btn">
-                            Login
+
+                <Link to="/login">
+                    <button type="button" class="btn btn-lg btn-secondary" id="log_btn">
+                        Login
                             </button>
-                    </Link>
-                    <Link to="/register">
-                        <button type="button" class="btn btn-lg btn-secondary" id="reg_btn">
-                            Register
+                </Link>
+                <Link to="/register">
+                    <button type="button" class="btn btn-lg btn-secondary" id="reg_btn">
+                        Register
                             </button>
-                    </Link>
-                </p>
+                </Link>
+
             </main>
 
             <footer class="mastfoot mt-auto">

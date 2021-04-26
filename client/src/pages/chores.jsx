@@ -3,19 +3,23 @@ import ToDoItem from "../components/todoitem.jsx";
 import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
+import Table from 'react-bootstrap/Table'
 
 function ChoresTDL() {
     const [inputText, setInputText] = useState("");
+    const [choreInputText, setChoreInputText] = useState("");
+    const [choreInputName, setChoreInputName] = useState("");
     const [items, setItems] = useState([]);
     const [roomKey, setRoomKey] = useState("");
     const [user, setUser] = useState("");
-    const [flipper, setFlipper] = useState(true)
+    const [flipper, setFlipper] = useState(0);
+    const [chores, setChores] = useState([])
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
         if (currUser) {
             setUser(currUser.name);
-            setRoomKey(currUser.roomKey)
+            setRoomKey(currUser.roomKey);
         } else {
             setUser(null)
         }
@@ -24,28 +28,40 @@ function ChoresTDL() {
 
     useEffect(() => {
         console.log(10000);
+        console.log(flipper);
         const payload = {
             roomkey: roomKey
         }
         async function getToDos() {
             const response = await axios({
-                url: 'http://localhost:4000/api/choresdisplay',
+                url: 'http://localhost:4000/api/toDoDisplay',
                 method: 'post',
                 data: payload
             })
+            setItems(response.data.items);
+        }
 
-            setItems(response.data.items)
-
+        async function getChores() {
+            const response = await axios({
+                url: 'http://localhost:4000/api/choresDisplay',
+                method: 'post',
+                data: payload
+            })
+            setChores(response.data.items);
         }
         getToDos();
+        getChores();
 
     }, [roomKey, flipper])
 
-    console.log(items)
+    console.log(flipper);
+    //console.log(items)
     function addItem() {
         /*setItems(prevItems => {
             return [...prevItems, inputText];
         });*/
+
+        setFlipper(flipper + 1);
 
         const payload = {
             item: inputText,
@@ -53,21 +69,63 @@ function ChoresTDL() {
         }
         async function addTodo() {
             const response = await axios({
-                url: 'http://localhost:4000/api/chores',
+                url: 'http://localhost:4000/api/toDo',
                 method: 'post',
                 data: payload
             })
+            if (response.data.token == 1234) {
+                setFlipper(flipper + 1);
+            }
         }
+        /* if (item == "toDo") {
+             addTodo()
+             setInputText("");
+         } else {*/
+        //addChore()
         addTodo()
         setInputText("");
 
-
-        if (flipper) {
-            setFlipper(false)
-        } else {
-            setFlipper(true)
-        }
+        setFlipper(flipper + 1);
+        console.log(flipper);
     }
+
+    function addChores() {
+        /*setItems(prevItems => {
+            return [...prevItems, inputText];
+        });*/
+
+        setFlipper(flipper + 1);
+
+        const payload = {
+            item: choreInputText,
+            name: choreInputName,
+            roomKey: roomKey
+        }
+        console.log(payload);
+        async function addChore() {
+            const response = await axios({
+                url: 'http://localhost:4000/api/chore',
+                method: 'post',
+                data: payload
+            })
+            if (response.data.token == 1234) {
+                setFlipper(flipper + 1);
+            }
+        }
+        /* if (item == "toDo") {
+             addTodo()
+             setInputText("");
+         } else {*/
+        //addChore()
+        addChore()
+        setChoreInputText("");
+        setChoreInputName("");
+
+        setFlipper(flipper + 1);
+        console.log(flipper);
+    }
+
+
 
     const renderItem = (todos, index) => {
         return (
@@ -79,6 +137,16 @@ function ChoresTDL() {
                     onChecked={deleteItem} /></li>
         )
     }
+
+    const renderChore = (chores, index) => {
+        return (
+            <tr key={index}>
+                <td>{chores.item}</td>
+                <td>{chores.name}</td>
+            </tr>
+        )
+    }
+
     function deleteItem(id) {
         console.log(id);
         const payload = {
@@ -87,7 +155,7 @@ function ChoresTDL() {
 
         async function deleteTodo() {
             const response = await axios({
-                url: 'http://localhost:4000/api/choresdelete',
+                url: 'http://localhost:4000/api/toDoDelete',
                 method: 'post',
                 data: payload
             })
@@ -101,6 +169,8 @@ function ChoresTDL() {
         });
 
     }
+
+
 
     return (
         <div className="container">
@@ -119,6 +189,30 @@ function ChoresTDL() {
                     {items.map(renderItem)}
                 </ul>
             </div>
+
+            <div className="heading">
+                <h1>Chores List</h1>
+            </div>
+            <div className="form">
+                <span>Item </span>
+                <input onChange={e => setChoreInputText(e.target.value)}/*{handleChange}*/ type="text" value={choreInputText} />
+                <span> Name </span>
+                <input onChange={e => setChoreInputName(e.target.value)}/*{handleChange}*/ type="text" value={choreInputName} />
+                <button onClick={addChores}>
+                    <span>Add</span>
+                </button>
+            </div>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Chore</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {chores.map(renderChore)}
+                </tbody>
+            </Table>
         </div>
     );
 }
