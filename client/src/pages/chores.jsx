@@ -13,7 +13,7 @@ function ChoresTDL() {
     const [roomKey, setRoomKey] = useState("");
     const [user, setUser] = useState("");
     const [flipper, setFlipper] = useState(0);
-    const [chores, setChores] = useState([])
+    const [chores, setChores] = useState([]);
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -48,9 +48,10 @@ function ChoresTDL() {
                 data: payload
             })
             setChores(response.data.items);
+            console.log(chores);
         }
-        getToDos();
         getChores();
+        getToDos();
 
     }, [roomKey, flipper])
 
@@ -109,7 +110,10 @@ function ChoresTDL() {
                 data: payload
             })
             if (response.data.token == 1234) {
+                console.log("success");
                 setFlipper(flipper + 1);
+            } else {
+                console.log("fail");
             }
         }
         /* if (item == "toDo") {
@@ -141,8 +145,8 @@ function ChoresTDL() {
     const renderChore = (chores, index) => {
         return (
             <tr key={index}>
-                <td>{chores.item}</td>
-                <td>{chores.name}</td>
+                <td>{chores.Item}</td>
+                <td>{chores.Name}</td>
             </tr>
         )
     }
@@ -179,7 +183,7 @@ function ChoresTDL() {
                 <h1>To-Do List</h1>
             </div>
             <div className="form">
-                <input onChange={e => setInputText(e.target.value)}/*{handleChange}*/ type="text" value={inputText} />
+                <input onChange={e => setInputText(e.target.value)} type="text" value={inputText} />
                 <button onClick={addItem}>
                     <span>Add</span>
                 </button>
@@ -195,9 +199,9 @@ function ChoresTDL() {
             </div>
             <div className="form">
                 <span>Item </span>
-                <input onChange={e => setChoreInputText(e.target.value)}/*{handleChange}*/ type="text" value={choreInputText} />
+                <input onChange={e => setChoreInputText(e.target.value)} type="text" value={choreInputText} />
                 <span> Name </span>
-                <input onChange={e => setChoreInputName(e.target.value)}/*{handleChange}*/ type="text" value={choreInputName} />
+                <input onChange={e => setChoreInputName(e.target.value)} type="text" value={choreInputName} />
                 <button onClick={addChores}>
                     <span>Add</span>
                 </button>

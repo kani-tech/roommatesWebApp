@@ -35,7 +35,7 @@ const homePage = () => {
         <div class="home-body" id="box_home">
 
 
-            <main role="main" class="inner cover">
+            <main role="main" class="cover">
                 <div class="text">
                     <h1 class="cover-heading">Roomates</h1>
                     <p class="lead">Bringing students together.</p>

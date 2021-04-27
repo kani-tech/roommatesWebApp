@@ -1,5 +1,5 @@
 import React, { useState, useEffect, componentDidMount } from "react";
-import ToDoItem from "../components/todoitem.jsx";
+import Request from "../components/requestPost.jsx";
 import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
@@ -10,6 +10,7 @@ function Complaints() {
     const [title, setTitle] = useState("");
     const [request, setRequest] = useState("");
     const [posts, setPosts] = useState([]);
+    const [flipper, setFlipper] = useState(true)
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -32,12 +33,18 @@ function Complaints() {
             data: payload
         })
 
+        if (flipper) {
+            setFlipper(false)
+        } else {
+            setFlipper(true)
+        }
+
         console.log(response)
     }
 
     useEffect(() => {
         getComplaints();
-    }, [roomKey])
+    }, [roomKey, flipper])
 
 
     const getComplaints = async () => {
@@ -53,6 +60,17 @@ function Complaints() {
         setPosts(response.data.requests)
     }
 
+    const renderPosts = (posts, index) => {
+        return (
+            <div>
+                <Request
+                    key={index}
+                    id={index}
+                    title={posts.title}
+                    text={posts.request} />
+            </div>
+        )
+    }
 
     const displayPost = (posts) => {
         if (!posts.length) {
@@ -61,11 +79,10 @@ function Complaints() {
             return posts.map((post, index) => (
                 <div key={index}>
                     <h3>{post.title}</h3>
-                    <p>{post.body}</p>
+                    <p>{post.request}</p>
                 </div>
             ))
         }
-
     }
 
     return (
@@ -97,7 +114,7 @@ function Complaints() {
                 <button>Submit</button>
             </form>
             <div>
-                {displayPost(posts)}
+                {posts.map(renderPosts)}
             </div>
         </div>
     )
