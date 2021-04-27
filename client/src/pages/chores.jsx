@@ -5,12 +5,14 @@ import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
 import Table from 'react-bootstrap/Table'
 
+
 function ChoresTDL() {
     const [inputText, setInputText] = useState("");
     const [choreInputText, setChoreInputText] = useState("");
     const [choreInputName, setChoreInputName] = useState("");
     const [items, setItems] = useState([]);
     const [roomKey, setRoomKey] = useState("");
+    const [roomies, setRoomies] = useState([]);
     const [user, setUser] = useState("");
     const [flipper, setFlipper] = useState(0);
     const [chores, setChores] = useState([]);
@@ -25,6 +27,24 @@ function ChoresTDL() {
         }
     }, 1);
 
+    const schedule = require('node-schedule');
+
+    const job = schedule.scheduleJob('* * * * 0', async function () {
+
+        async function getNames() {
+            const response = await axios({
+                url: 'http://localhost:4000/api/dashboard',
+                method: 'post',
+                data: payload
+            })
+
+            console.log(response.data.roommates)
+            setRoomies(response.data.roommates)
+
+        }
+        getNames();
+        console.log('The answer to life, the universe, and everything!');
+    });
 
     useEffect(() => {
         console.log(10000);
@@ -58,9 +78,8 @@ function ChoresTDL() {
     console.log(flipper);
     //console.log(items)
     function addItem() {
-        /*setItems(prevItems => {
-            return [...prevItems, inputText];
-        });*/
+
+        console.log(roomKey);
 
         setFlipper(flipper + 1);
 
@@ -78,11 +97,6 @@ function ChoresTDL() {
                 setFlipper(flipper + 1);
             }
         }
-        /* if (item == "toDo") {
-             addTodo()
-             setInputText("");
-         } else {*/
-        //addChore()
         addTodo()
         setInputText("");
 
@@ -91,15 +105,11 @@ function ChoresTDL() {
     }
 
     function addChores() {
-        /*setItems(prevItems => {
-            return [...prevItems, inputText];
-        });*/
-
         setFlipper(flipper + 1);
 
         const payload = {
             item: choreInputText,
-            name: choreInputName,
+            name: choreInputName.charAt(0).toUpperCase() + choreInputName.slice(1),
             roomKey: roomKey
         }
         console.log(payload);
@@ -111,16 +121,16 @@ function ChoresTDL() {
             })
             if (response.data.token == 1234) {
                 console.log("success");
-                setFlipper(flipper + 1);
+                document.getElementById("error").innerHTML = ""
             } else {
+                let error = document.getElementById("error");
+                error.innerHTML = "<span style='color: red;'>" +
+                    "Please enter the name of a roommate</span>"
                 console.log("fail");
             }
+            setFlipper(flipper + 1);
         }
-        /* if (item == "toDo") {
-             addTodo()
-             setInputText("");
-         } else {*/
-        //addChore()
+
         addChore()
         setChoreInputText("");
         setChoreInputName("");
@@ -206,6 +216,8 @@ function ChoresTDL() {
                     <span>Add</span>
                 </button>
             </div>
+            <span id="error"></span>
+            <br></br>
             <Table striped bordered hover>
                 <thead>
                     <tr>
