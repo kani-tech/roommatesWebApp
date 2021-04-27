@@ -21,6 +21,12 @@ function Complaints() {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        if (flipper) {
+            setFlipper(false);
+        } else {
+            setFlipper(true);
+        }
+
         const payload = {
             roomkey: roomKey,
             title: title,
@@ -33,14 +39,10 @@ function Complaints() {
             data: payload
         })
 
-        if (flipper) {
-            setFlipper(false)
-        } else {
-            setFlipper(true)
-        }
-
-        console.log(response)
+        console.log(response);
     }
+
+    console.log(flipper);
 
     useEffect(() => {
         getComplaints();
