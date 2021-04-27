@@ -1,5 +1,5 @@
 {
-  "name": "roomatesWebApp",
+  "name": "roomatesV3",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "client": "cd client && npm start",
-    "dev": "concurrently -n 'server, client' -c 'red, green' \"nodemon server.js\" \"npm run client\""
+    "dev": "concurrently -n 'server, client' -c 'green, yellow' \"nodemon server.js\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,8 @@
     "express": "^4.17.1",
     "mongoose": "^5.12.0",
     "morgan": "^1.10.0",
+    "node-schedule": "^2.0.0",
+    "nodemailer": "^6.5.0",
     "react-router-dom": "^5.2.0"
   }
 }

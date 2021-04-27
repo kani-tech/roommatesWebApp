@@ -6,6 +6,7 @@ const user = require('../models/userModel.js')
 const tdlModel = require('../models/tdl.js')
 const requestModel = require('../models/requestModel.js')
 const choreModel = require('../models/chores.js')
+const nodemailer = require("nodemailer")
 
 const USER_LOGIN_SUCCESS = 1234;
 const USER_LOGIN_FAIL = 4321;
@@ -91,14 +92,14 @@ userRouter.post('/dashboard', async function (req, res) {
     })
 })
 
-userRouter.post('/login', function (req, res) {
+userRouter.post('/login', async function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
     const body = req.body;
     console.log(email)
     console.log(body)
     console.log(password)
-    user.findOne({ email: email }, function (err, foundUser) {
+    user.findOne({ email: email }, await function (err, foundUser) {
         console.log(foundUser);
         if (err) {
             console.log(err)
@@ -190,7 +191,31 @@ userRouter.post('/addrequest', async function (req, res) {
         request: request,
     });
 
-    addRequest.save()
+    addRequest.save();
+
+    async function sendMail() {
+
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'propmanageApp@gmail.com',
+                pass: 'ontheMoon2023'
+            }
+        })
+
+
+        await transporter.sendMail({
+            from: '"roomates.com" <kanishksk@gmail.com>',
+            to: "kanishksk@gmail.com", // replace with landlord email
+            subject: "New Request",
+            text: `In room ${roomkey} there has been a new request:
+                ${title}
+                ${request}`
+        })
+    }
+    sendMail().catch(console.error)
+
+
 })
 
 userRouter.post('/getcomplaints', async function (req, res) {
