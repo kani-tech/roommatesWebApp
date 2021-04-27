@@ -22,7 +22,7 @@ function RegistrationScreen() {
     `);
 
         const payload = {
-            firstName: firstName,
+            firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
             lastName: lastName,
             Email: email,
             Password: password
@@ -33,11 +33,6 @@ function RegistrationScreen() {
             method: 'post',
             data: payload
         })
-        //}).then(() => {
-        //     console.log('Data received')
-        // }).catch(() => {
-        //     console.log('error')
-        // })
 
         console.log(response)
 
@@ -60,112 +55,33 @@ function RegistrationScreen() {
     }
 
     return (
+        <div class="user">
+            <header class="user__header">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+                <h1 class="user__title">Registration</h1>
+            </header>
+            <form class="form" onSubmit={handleSubmit}>
+                <div class="form__group">
+                    <input type="text" name="fName" value={firstName} onChange={e => setfirstName(e.target.value)} placeholder="First Name" class="form__input" />
+                </div>
 
-        <div>
-            <form onSubmit={handleSubmit}>
-                <h1>Create Account</h1>
-                <label>
-                    First Name:
-        <input
-                        type="text"
-                        name="fName"
-                        value={firstName}
-                        onChange={e => setfirstName(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Last Name:
-        <input
-                        type="text"
-                        name="lName"
-                        value={lastName}
-                        onChange={e => setlastName(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Email:
-        <input
-                        type="email"
-                        name="email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password:
-        <input
-                        type="password"
-                        name="pass"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
-                    />
-                </label>
+                <div class="form__group">
+                    <input type="text" name="lName" value={lastName} onChange={e => setlastName(e.target.value)} placeholder="Last Name" class="form__input" />
+                </div>
 
-                <button type="submit">
-                    Submit
-                </button>
+                <div class="form__group">
+                    <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" class="form__input" />
+                </div>
+
+                <div class="form__group">
+                    <input type="password" name="pass" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" class="form__input" />
+                </div>
+
+                <button class="btn" type="submit">Register</button>
             </form>
             <h1>Click <Link to="/login"> here </Link>  to login if you have an account</h1>
         </div>
-
-
-
     )
-}/*
-    return (
-        <form onSubmit={handleSubmit}>
-            <h1>Create Account</h1>
-            <label>
-                First Name:
-<input
-                    type="text"
-                    name="fName"
-                    value={firstName}
-                    onChange={e => setfirstName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Last Name:
-<input
-                    type="text"
-                    name="lName"
-                    value={lastName}
-                    onChange={e => setlastName(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Email:
-<input
-                    type="email"
-                    name="email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password:
-<input
-                    type="password"
-                    name="pass"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    required
-                //required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,}"
-                />
-            </label>
-            <button type="button">
-                Submit
-    </button>
-        </form>
-    )
-}*/
+}
 
 export default RegistrationScreen;

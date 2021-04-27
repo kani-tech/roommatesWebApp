@@ -47,10 +47,11 @@ const LoginPage = () => {
         if (response.data.token == 1234) {
             setUser(response.data)
             console.log(user)
-
             localStorage.setItem("user", JSON.stringify(response.data));
         } else {
-            alert("Invalid email or password")
+            let error = document.getElementById("error");
+            error.innerHTML = "<span style='color: red;'>" +
+                "Invalid Email and/or Password</span>"
         }
     }
 
@@ -103,6 +104,7 @@ const LoginPage = () => {
                     <button className="w-100 btn btn-lg btn-primary">Submit</button>
                 </form>
             </div>
+            <span id="error"></span>
         </div>
 
     )
