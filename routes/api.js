@@ -127,6 +127,28 @@ userRouter.post('/toDo', function (req, res) {
     newItem.save()
 })
 
+userRouter.post('/chore', async function (req, res) {
+    const roomkey = req.body.roomKey;
+    let existName = await user.findOne({ firstName: req.body.name }, { email: req.body.roomKey });
+    console.log(existName);
+    if (existName) {
+        const newItem = new choreModel({
+            Item: req.body.item,
+            Name: req.body.name,
+            roomKey: roomkey
+        });
+        newItem.save();
+        res.send({
+            token: USER_LOGIN_SUCCESS
+        });
+    } else {
+        res.send({
+            token: USER_LOGIN_FAIL
+        })
+        return;
+    }
+})
+
 userRouter.post('/toDoDisplay', async function (req, res) {
     const roomkey = req.body.roomkey;
     console.log(roomkey)
@@ -174,6 +196,7 @@ userRouter.post('/addrequest', async function (req, res) {
 userRouter.post('/getcomplaints', async function (req, res) {
     const roomkey = req.body.roomkey
     console.log("roomkey", roomkey)
+    console.log(req.body)
     requestModel.find({ roomKey: roomkey }, await function (err, foundRequests) {
         if (err) {
             console.log(err)
@@ -204,14 +227,4 @@ userRouter.post('/choresDisplay', async function (req, res) {
             })
         }
     })
-})
-
-userRouter.post('/chore', function (req, res) {
-    const roomkey = req.body.roomKey;
-    const newItem = new choreModel({
-        Item: req.body.item,
-        Name: req.body.name,
-        roomKey: roomkey
-    });
-    newItem.save()
 })
