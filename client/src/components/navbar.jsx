@@ -28,14 +28,12 @@ const MyNavBar = () => (
                 <Link to="/">
                     <button onClick={Dashboard.handleLogout}>Logout</button>
                 </Link>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button variant="outline-success">Search</Button>
+
+
             </Form>
         </Navbar.Collapse>
 
     </Navbar>
-
-
 
 )
 
