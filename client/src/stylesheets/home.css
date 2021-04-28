@@ -20,6 +20,7 @@ a:hover {
 
 .text {
   margin-left: 100px;
+  margin-top: 50%;
 }
 
 
@@ -107,8 +108,19 @@ body {
 .cover {
   padding-left: 900px;
   margin-top: 280px;
+  margin: auto;
+  
+ 
 }
 
+.boxed-stuff {
+  background: blanchedalmond;
+  margin-left: 10%;
+  width: 520px;
+  height: 500px;
+
+
+}
 
 
 /*
