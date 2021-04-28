@@ -4,30 +4,6 @@ import '../stylesheets/home.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 // Pages
 
-/* const homePage = () => {
-
-    return (
-        <body className="text-center">
-            <div className="cover-container d-flex h-100 p-3 mx-auto flex-column">
-                <header className="masthead mb-auto">
-                    <h3>Welcome to roomates</h3>
-                </header>
-
-                <Link to="/login">
-                    <button type="button" >
-                        Login
-     </button>
-                </Link>
-                <Link to="/register">
-                    <button type="button">
-                        Register
-                </button>
-                </Link>
-            </div>
-        </body>
-
-    )
-} */
 
 const homePage = () => {
 
@@ -36,22 +12,24 @@ const homePage = () => {
 
 
             <main role="main" class="cover">
-                <div class="text">
-                    <h1 class="cover-heading">Roomates</h1>
-                    <p class="lead">Bringing students together.</p>
+                <div class="boxed-stuff">
+                    <div class="text">
+                        <h1 class="cover-heading">Roomates</h1>
+                        <p class="lead">Bringing students together.</p>
+                    </div>
+
+
+                    <Link to="/login">
+                        <button type="button" class="btn btn-lg btn-secondary" id="log_btn">
+                            Login
+                            </button>
+                    </Link>
+                    <Link to="/register">
+                        <button type="button" class="btn btn-lg btn-secondary" id="reg_btn">
+                            Register
+                            </button>
+                    </Link>
                 </div>
-
-
-                <Link to="/login">
-                    <button type="button" class="btn btn-lg btn-secondary" id="log_btn">
-                        Login
-                            </button>
-                </Link>
-                <Link to="/register">
-                    <button type="button" class="btn btn-lg btn-secondary" id="reg_btn">
-                        Register
-                            </button>
-                </Link>
 
             </main>
 

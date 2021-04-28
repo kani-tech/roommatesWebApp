@@ -39,8 +39,11 @@ function Complaints() {
             data: payload
         })
 
+        e.target.reset()
         console.log(response);
     }
+
+    //
 
     console.log(flipper);
 
@@ -89,6 +92,7 @@ function Complaints() {
 
     return (
         <div>
+            <MyNavBar />
             <h1> Enter your request </h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-input">

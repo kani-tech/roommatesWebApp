@@ -77,7 +77,7 @@ function Dashboard() {
     } else {
         return (
             <div>
-                <MyNavBar />
+                <MyNavBar logout={handleLogout} />
                 <h1> Welcome to da HUB {user} with Room Key: {roomKey}</h1>
                 <Table striped bordered hover>
                     <thead>
@@ -91,9 +91,6 @@ function Dashboard() {
                         {roomies.map(renderUser)}
                     </tbody>
                 </Table>
-                <Link to="/">
-                    <button onClick={handleLogout}>logout</button>
-                </Link>
             </div>
         )
     }

@@ -35,7 +35,7 @@ function ChoresTDL() {
             const response = await axios({
                 url: 'http://localhost:4000/api/dashboard',
                 method: 'post',
-                data: payload
+                // data: payload
             })
 
             console.log(response.data.roommates)
@@ -43,6 +43,8 @@ function ChoresTDL() {
 
         }
         getNames();
+
+
         console.log('The answer to life, the universe, and everything!');
     });
 
@@ -110,7 +112,8 @@ function ChoresTDL() {
         const payload = {
             item: choreInputText,
             name: choreInputName.charAt(0).toUpperCase() + choreInputName.slice(1),
-            roomKey: roomKey
+            roomKey: roomKey,
+            checked: false
         }
         console.log(payload);
         async function addChore() {
@@ -157,8 +160,28 @@ function ChoresTDL() {
             <tr key={index}>
                 <td>{chores.Item}</td>
                 <td>{chores.Name}</td>
+                <td><input
+                    name="isGoing"
+                    type="checkbox"
+                    checked={chores.Checked}
+                    onChange={updateChoreCheck} /></td>
             </tr>
         )
+    }
+
+    function updateChoreCheck(index) {
+        const payload = {
+            Item: chores[index],
+        }
+        console.log(index);
+        async function choreCheck() {
+            const response = await axios({
+                url: 'http://localhost:4000/api/choreCheck',
+                method: 'post',
+                data: payload
+            })
+        }
+        choreCheck();
     }
 
     function deleteItem(id) {
@@ -223,6 +246,7 @@ function ChoresTDL() {
                     <tr>
                         <th>Chore</th>
                         <th>Name</th>
+                        <th>Completion</th>
                     </tr>
                 </thead>
                 <tbody>
