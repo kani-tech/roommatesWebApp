@@ -136,7 +136,8 @@ userRouter.post('/chore', async function (req, res) {
         const newItem = new choreModel({
             Item: req.body.item,
             Name: req.body.name,
-            roomKey: roomkey
+            roomKey: roomkey,
+            Checked: false,
         });
         newItem.save();
         res.send({
@@ -148,6 +149,11 @@ userRouter.post('/chore', async function (req, res) {
         })
         return;
     }
+})
+
+userRouter.post('/choreCheck', async function (req, res) {
+    let update = await choreModel.findOneAndUpdate({ Item: req.body.Item }, { Checked: !(req.body.Checked) });
+    update = await choreModel.findOne({ Item: req.body.Item });
 })
 
 userRouter.post('/toDoDisplay', async function (req, res) {
