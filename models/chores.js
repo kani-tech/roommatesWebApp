@@ -15,6 +15,10 @@ const choreSchema = new Schema({
         type: String,
         required: true,
     },
+    Checked: {
+        type: Boolean,
+        required: true,
+    },
 })
 
 const choreModel = mongoose.model('chore', choreSchema);
