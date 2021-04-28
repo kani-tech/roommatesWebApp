@@ -18,20 +18,24 @@ a:hover {
   border: .05rem solid #fff;
 }
 
-.text {
-  margin-left: 100px;
-  margin-top: 50%;
-}
+
 
 
 /*
  * Base structure
  */
 
-html, 
+html {
+  height: 100%;
+}
+
 body {
   height: 100%;
+  background-image: url("../images/home.jpg");
+ 
+  /*
   background-color: rgb(224, 240, 253) !important;
+  */
   background-size: cover;
 }
 
@@ -44,6 +48,7 @@ body {
 #reg_btn {
   margin-left: 10px;
   width: 200px;
+  opacity: 1;
 }
 
 
@@ -69,6 +74,7 @@ body {
 .cover-heading {
   color: rgb(255, 0, 0);
   padding-left: 20px;
+  font-size: 50px;
 }
 
 
@@ -109,20 +115,29 @@ body {
   padding-left: 900px;
   margin-top: 280px;
   margin: auto;
-  
- 
 }
 
 .boxed-stuff {
-  background: blanchedalmond;
-  margin-left: 10%;
+  background: rgb(167, 167, 167);
+  opacity: 0.8;
   width: 520px;
-  height: 500px;
-
+  height: 300px;
+  margin: auto;
 
 }
+.text {
+  margin-left: 100px;
+  margin-top: 50%;
+}
 
+.text h1{
+  font-weight: bolder;
+  color: white; 
+}
 
+.text p {
+  color: white; 
+}
 /*
  * Footer
  */
@@ -146,7 +161,7 @@ body {
     text-align: center;
     opacity: 0;
     transform: translate3d(0, 500px, 0);
-    animation: arrive 500ms ease-in-out 0.7s forwards;
+    animation: arrive 100ms ease-in-out 0.7s forwards;
 }
 
 .user__title {
@@ -162,7 +177,7 @@ body {
     overflow: hidden;
     opacity: 0;
     transform: translate3d(0, 500px, 0);
-    animation: arrive 500ms ease-in-out 0.9s forwards;
+    animation: arrive 100ms ease-in-out 0.9s forwards;
 }
 
 .form--no {
