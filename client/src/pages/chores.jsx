@@ -16,6 +16,8 @@ function ChoresTDL() {
     const [user, setUser] = useState("");
     const [flipper, setFlipper] = useState(0);
     const [chores, setChores] = useState([]);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -161,27 +163,32 @@ function ChoresTDL() {
                 <td>{chores.Item}</td>
                 <td>{chores.Name}</td>
                 <td><input
-                    name="isGoing"
+                    name="checked"
                     type="checkbox"
+                    id={index}
                     checked={chores.Checked}
-                    onChange={updateChoreCheck} /></td>
+                    onChange={updateChoreCheck.bind(index, chores.Checked)} /></td>
             </tr>
         )
     }
 
-    function updateChoreCheck(index) {
+    function updateChoreCheck(checked, chore) {
         const payload = {
-            Item: chores[index],
+            Item: chores[chore.target.id].Item,
+            Checked: checked,
         }
-        console.log(index);
+        console.log(payload);
+
         async function choreCheck() {
             const response = await axios({
                 url: 'http://localhost:4000/api/choreCheck',
                 method: 'post',
                 data: payload
             })
+            console.log(response);
         }
         choreCheck();
+        setFlipper(flipper + 1);
     }
 
     function deleteItem(id) {
@@ -207,11 +214,16 @@ function ChoresTDL() {
 
     }
 
-
+    const handleLogout = () => {
+        setUser({});
+        setEmail("");
+        setPassword("");
+        localStorage.clear();
+    };
 
     return (
         <div className="container">
-            <MyNavBar />
+            <MyNavBar logout={handleLogout} />
             <div className="heading">
                 <h1>To-Do List</h1>
             </div>
