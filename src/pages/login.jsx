@@ -69,41 +69,27 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="main-body">
-            <div className="form-signin">
-                <form onSubmit={handleSubmit}>
-                    <h1>Log in here</h1>
-                    <div className="form-floating">
-                        <label>
-                            Email:
-                <input
-                                type="text"
-                                name="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                                className="form-control"
-                                required
-                            />
-                        </label>
-                    </div>
+        <div class="user">
+            <header class="user__header">
+                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+                <h1 class="user__title">Registration</h1>
+            </header>
 
-                    <div className="form-floating">
-                        <label>
-                            Password:
-                <input
-                                type="password"
-                                name="password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                className="form-control"
-                                required
-                            />
-                        </label>
-                    </div>
+            <form class="form" onSubmit={handleSubmit}>
+                <h1>Log in here</h1>
+                <div class="form__group">
+                    <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" class="form__input" required />
+                </div>
 
-                    <button className="w-100 btn btn-lg btn-primary">Submit</button>
-                </form>
-            </div>
+
+                <div class="form__group">
+                    <input type="password" name="pass" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" class="form__input" required />
+                </div>
+
+
+                <button class="btn" type="submit">Login</button>
+            </form>
+
             <span id="error"></span>
         </div>
 

@@ -12,7 +12,6 @@ function ChoresTDL() {
     const [choreInputName, setChoreInputName] = useState("");
     const [items, setItems] = useState([]);
     const [roomKey, setRoomKey] = useState("");
-    const [roomies, setRoomies] = useState([]);
     const [user, setUser] = useState("");
     const [flipper, setFlipper] = useState(0);
     const [chores, setChores] = useState([]);
@@ -31,21 +30,33 @@ function ChoresTDL() {
 
     const schedule = require('node-schedule');
 
-    const job = schedule.scheduleJob('* * * * 0', async function () {
 
-        async function getNames() {
+    const getNames = (mates, index) => {
+        return mates.firstName;
+    }
+
+    const job = schedule.scheduleJob('0 49 19 * * *', async function () {
+
+        async function getInfo() {
             const response = await axios({
                 url: 'http://localhost:4000/api/dashboard',
                 method: 'post',
-                // data: payload
+                data: { roomKey: roomKey }
+            })
+            let roomies = response.data.roommates.map(getNames);
+            roomies = roomies.sort(() => Math.random() - 0.5);
+            console.log(roomies);
+
+            const res = await axios({
+                url: 'http://localhost:4000/api/updateChores',
+                method: 'post',
+                data: { roomies, chores }
             })
 
-            console.log(response.data.roommates)
-            setRoomies(response.data.roommates)
-
         }
-        getNames();
 
+
+        getInfo();
 
         console.log('The answer to life, the universe, and everything!');
     });
@@ -127,10 +138,15 @@ function ChoresTDL() {
             if (response.data.token == 1234) {
                 console.log("success");
                 document.getElementById("error").innerHTML = ""
-            } else {
+            } else if (response.data.token == 4321) {
                 let error = document.getElementById("error");
                 error.innerHTML = "<span style='color: red;'>" +
                     "Please enter the name of a roommate</span>"
+                console.log("fail");
+            } else {
+                let error = document.getElementById("error");
+                error.innerHTML = "<span style='color: red;'>" +
+                    "Oops! That chore already exists, make sure to complete it!</span>"
                 console.log("fail");
             }
             setFlipper(flipper + 1);

@@ -10,6 +10,9 @@ import LoginPage from "./pages/login.jsx"
 import Dashboard from "./pages/dashboard.jsx"
 import EnterRoomKey from "./pages/pageafterregister.jsx"
 import ChoresTDL from "./pages/chores.jsx"
+import Complaints from "./pages/complaints.jsx"
+import PayRent from "./pages/payment.jsx"
+
 
 
 function App() {
@@ -25,6 +28,8 @@ function App() {
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/roomKeyPage" component={EnterRoomKey} />
         <Route exact path="/chores" component={ChoresTDL} />
+        <Route exact path="/complaints" component={Complaints} />
+        <Route exact path="/payrent" component={PayRent} />
         <Route component={Errpage} />
         <Redirect to="/404" />
       </Switch>

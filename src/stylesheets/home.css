@@ -41,7 +41,8 @@ body {
 
 
 #log_btn {
-  margin-left: 15px;
+  margin-left: 10%;
+  margin-top: 10%;
   width: 200px;
 }
 
@@ -49,6 +50,7 @@ body {
   margin-left: 10px;
   width: 200px;
   opacity: 1;
+  margin-top: 10%;
 }
 
 
@@ -72,9 +74,10 @@ body {
 }
 
 .cover-heading {
-  color: rgb(255, 0, 0);
+  color: white;
   padding-left: 20px;
   font-size: 50px;
+  margin-left: 5%;
 }
 
 
@@ -123,6 +126,7 @@ body {
   width: 520px;
   height: 300px;
   margin: auto;
+  margin-left: auto;
 
 }
 .text {
@@ -130,10 +134,13 @@ body {
   margin-top: 50%;
 }
 
-.text h1{
-  font-weight: bolder;
-  color: white; 
+.lead {
+  margin-left: -3%;
+  font-size: 30px !important;
+
 }
+
+
 
 .text p {
   color: white; 
@@ -177,7 +184,7 @@ body {
     overflow: hidden;
     opacity: 0;
     transform: translate3d(0, 500px, 0);
-    animation: arrive 100ms ease-in-out 0.9s forwards;
+    animation: arrive 900ms ease-in-out 0.9s forwards;
 }
 
 .form--no {

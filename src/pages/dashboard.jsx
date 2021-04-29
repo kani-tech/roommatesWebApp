@@ -91,6 +91,7 @@ function Dashboard() {
                         {roomies.map(renderUser)}
                     </tbody>
                 </Table>
+
             </div>
         )
     }

@@ -9,13 +9,14 @@ import MyNavBar from '../components/navbar.jsx'
 
 
 function PayRent() {
-    const [items, setItems] = useState([]);
     const [roomKey, setRoomKey] = useState("");
     const [roomies, setRoomies] = useState([]);
     const [user, setUser] = useState("");
     const [rent, setRent] = useState(0)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [paidFor, setPaidFor] = useState(false);
+    const [loaded, setLoaded] = useState(false);
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -26,6 +27,8 @@ function PayRent() {
             setUser(null)
         }
     }, 1);
+
+
 
     const handleLogout = () => {
         setUser({});
@@ -44,9 +47,7 @@ function PayRent() {
 
         </div>
 
-
     )
-
 
 }
 

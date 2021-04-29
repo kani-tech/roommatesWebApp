@@ -10,7 +10,10 @@ function Complaints() {
     const [title, setTitle] = useState("");
     const [request, setRequest] = useState("");
     const [posts, setPosts] = useState([]);
-    const [flipper, setFlipper] = useState(true)
+    const [flipper, setFlipper] = useState(true);
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -90,9 +93,16 @@ function Complaints() {
         }
     }
 
+    const handleLogout = () => {
+        setUser({});
+        setEmail("");
+        setPassword("");
+        localStorage.clear();
+    };
+
     return (
         <div>
-            <MyNavBar />
+            <MyNavBar logout={handleLogout} />
             <h1> Enter your request </h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-input">
