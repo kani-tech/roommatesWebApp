@@ -34,7 +34,7 @@ userRouter.post('/register', async function (req, res) {
             res.send({
                 token: USER_LOGIN_FAIL
             })
-            return
+            return;
         } else {
             res.send({
                 token: USER_LOGIN_SUCCESS
@@ -130,9 +130,10 @@ userRouter.post('/toDo', function (req, res) {
 
 userRouter.post('/chore', async function (req, res) {
     const roomkey = req.body.roomKey;
-    let existName = await user.findOne({ firstName: req.body.name }, { email: req.body.roomKey });
+    let existName = await user.findOne({ firstName: req.body.name });
+    let existsChore = await choreModel.findOne({ Item: req.body.item });
     console.log(existName);
-    if (existName) {
+    if (existName && !existsChore) {
         const newItem = new choreModel({
             Item: req.body.item,
             Name: req.body.name,
@@ -143,17 +144,28 @@ userRouter.post('/chore', async function (req, res) {
         res.send({
             token: USER_LOGIN_SUCCESS
         });
-    } else {
+    } else if (!existName) {
         res.send({
             token: USER_LOGIN_FAIL
+        })
+        return;
+    } else {
+        res.send({
+            token: 5318008
         })
         return;
     }
 })
 
 userRouter.post('/choreCheck', async function (req, res) {
+    console.log(req.body);
     let update = await choreModel.findOneAndUpdate({ Item: req.body.Item }, { Checked: !(req.body.Checked) });
+    console.log(update);
     update = await choreModel.findOne({ Item: req.body.Item });
+    console.log(update);
+    res.send({
+        token: USER_LOGIN_SUCCESS,
+    });
 })
 
 userRouter.post('/toDoDisplay', async function (req, res) {
@@ -212,7 +224,7 @@ userRouter.post('/addrequest', async function (req, res) {
 
         await transporter.sendMail({
             from: '"roomates.com" <kanishksk@gmail.com>',
-            to: "kanishksk@gmail.com", // replace with landlord email
+            to: "jgreymon@gmail.com", // replace with landlord email
             subject: "New Request",
             text: `In room ${roomkey} there has been a new request:
                 ${title}
@@ -220,8 +232,6 @@ userRouter.post('/addrequest', async function (req, res) {
         })
     }
     sendMail().catch(console.error)
-
-
 })
 
 userRouter.post('/getcomplaints', async function (req, res) {
@@ -243,15 +253,15 @@ userRouter.post('/getcomplaints', async function (req, res) {
 
 userRouter.post('/choresDisplay', async function (req, res) {
     const roomkey = req.body.roomkey;
-    console.log(roomkey);
+    //console.log(roomkey);
     choreModel.find({ roomKey: roomkey }, await function (err, foundMates) {
-        console.log(foundMates)
+        //console.log(foundMates)
         if (err) {
             res.send({
                 token: USER_LOGIN_FAIL
             })
         } else {
-            console.log(foundMates);
+            //console.log(foundMates);
             res.send({
                 token: USER_LOGIN_SUCCESS,
                 items: foundMates,
@@ -259,3 +269,29 @@ userRouter.post('/choresDisplay', async function (req, res) {
         }
     })
 })
+
+
+userRouter.post('/updateChores', async function (req, res) {
+    console.log(req.body.roomies);
+    console.log(req.body.chores);
+    const numChores = await choreModel.countDocuments({});
+    console.log("length", req.body.roomies.length);
+    console.log("numChores", numChores);
+    for (let i = 0; i < numChores; ++i) {
+        console.log(i);
+        console.log(req.body.chores[i].Item);
+        console.log(req.body.roomies[i % req.body.roomies.length])
+
+
+        let update = await choreModel.findOneAndUpdate({ Item: req.body.chores[i].Item }, { Name: req.body.roomies[i % req.body.roomies.length] });
+        console.log(update);
+    }
+    // let update = await choreModel.findOneAndUpdate({ Item: req.body.Item }, { Checked: !(req.body.Checked) });
+    // console.log(update);
+    // update = await choreModel.findOne({ Item: req.body.Item });
+    // console.log(update);
+    res.send({
+        token: USER_LOGIN_SUCCESS,
+    });
+})
+
