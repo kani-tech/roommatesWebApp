@@ -4,8 +4,25 @@ import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
+import Checkbox from '@material-ui/core/Checkbox';
+import { withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import { grey } from '@material-ui/core/colors';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
+const GreenCheckbox = withStyles({
+    root: {
+        color: grey[600],
+        '&$checked': {
+            color: green[600],
+        },
+    },
+    checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
+toast.configure()
 function ChoresTDL() {
     const [inputText, setInputText] = useState("");
     const [choreInputText, setChoreInputText] = useState("");
@@ -35,7 +52,7 @@ function ChoresTDL() {
         return mates.firstName;
     }
 
-    const job = schedule.scheduleJob('0 49 19 * * *', async function () {
+    const job = schedule.scheduleJob('50 52 19 * * *', async function () {
 
         async function getInfo() {
             const response = await axios({
@@ -54,11 +71,7 @@ function ChoresTDL() {
             })
 
         }
-
-
         getInfo();
-
-        console.log('The answer to life, the universe, and everything!');
     });
 
     useEffect(() => {
@@ -91,7 +104,7 @@ function ChoresTDL() {
     }, [roomKey, flipper])
 
     console.log(flipper);
-    //console.log(items)
+
     function addItem() {
 
         console.log(roomKey);
@@ -136,18 +149,23 @@ function ChoresTDL() {
                 data: payload
             })
             if (response.data.token == 1234) {
+                toast.success('Successfully added!!')
+                /*
                 console.log("success");
-                document.getElementById("error").innerHTML = ""
+                document.getElementById("error").innerHTML = ""*/
             } else if (response.data.token == 4321) {
-                let error = document.getElementById("error");
+                toast.error('Please enter the name of a roommate')
+                /*let error = document.getElementById("error");
                 error.innerHTML = "<span style='color: red;'>" +
                     "Please enter the name of a roommate</span>"
-                console.log("fail");
+                console.log("fail");*/
             } else {
+                toast.warn('Oops! That chore already exists, make sure to complete it!')
+                /*
                 let error = document.getElementById("error");
                 error.innerHTML = "<span style='color: red;'>" +
                     "Oops! That chore already exists, make sure to complete it!</span>"
-                console.log("fail");
+                console.log("fail");*/
             }
             setFlipper(flipper + 1);
         }
@@ -178,15 +196,24 @@ function ChoresTDL() {
             <tr key={index}>
                 <td>{chores.Item}</td>
                 <td>{chores.Name}</td>
-                <td><input
+                <td><GreenCheckbox
                     name="checked"
-                    type="checkbox"
                     id={index}
                     checked={chores.Checked}
-                    onChange={updateChoreCheck.bind(index, chores.Checked)} /></td>
+                    onChange={updateChoreCheck.bind(index, chores.Checked)} />
+                </td>
             </tr>
         )
     }
+    const renderDelete = (chores, index) => {
+        return (
+            <tr key={index}>
+                <td>Delete</td>
+            </tr>
+        )
+    }
+    //<Button variant="danger" size="sm"
+    //style={{ height: 28, width: 60 }}>Delete</Button>
 
     function updateChoreCheck(checked, chore) {
         const payload = {
@@ -208,6 +235,29 @@ function ChoresTDL() {
     }
 
     function deleteItem(id) {
+        console.log(id);
+        const payload = {
+            itemID: items[id]._id
+        }
+
+        async function deleteTodo() {
+            const response = await axios({
+                url: 'http://localhost:4000/api/toDoDelete',
+                method: 'post',
+                data: payload
+            })
+        }
+        console.log(items[id]._id)
+        deleteTodo()
+        setItems(prevItems => {
+            return prevItems.filter((item, index) => {
+                return index !== id;
+            });
+        });
+
+    }
+
+    function deleteChore(id) {
         console.log(id);
         const payload = {
             itemID: items[id]._id
@@ -269,12 +319,13 @@ function ChoresTDL() {
             </div>
             <span id="error"></span>
             <br></br>
+
             <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th>Chore</th>
                         <th>Name</th>
-                        <th>Completion</th>
+                        <th width="150">Completion</th>
                     </tr>
                 </thead>
                 <tbody>
