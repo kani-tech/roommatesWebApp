@@ -28,7 +28,6 @@ body {
   background-size: cover;
 }
 
-
 body {
   display: -ms-flexbox;
   display: -webkit-box;
@@ -64,14 +63,10 @@ body {
   opacity: 0.8;
   width: 120%;
   height: 100%;
-  margin: auto;
   text-align: center;
+  margin-top: 92%;
 }
 
-.boxed-stuff.cover-heading {
-  padding-top: 10%;
-
-}
 .text {
   margin-top: 50%;
   text-align: center;
@@ -98,7 +93,9 @@ body {
 }
 
 .back-to-login {
-  font-size: 25px;
+  margin-top: 5%;
+  font-size: 18px;
+  text-align: center;
 }
 
 .nav-masthead .nav-link {
@@ -127,25 +124,15 @@ body {
   }
 }
 
-/*
- * Footer
- */
-.mastfoot {
-  color: rgba(255, 255, 255, .5);
-}
-
-
 
 .user-login {
-    max-width: 90%;
-    margin: 10 auto;
-    margin-top: 120%;
+    margin-top: 110%;
 }
 
 .user-reg{
-   max-width: 90%;
-    margin: 10 auto;
-    margin-top: 25%;
+  max-width: 90%;
+  margin: 10 auto;
+  margin-top: 55%;
 }
 
 .user__header {
