@@ -4,6 +4,7 @@ import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
 import Table from 'react-bootstrap/Table'
+//import { TableHeaderColumn } from 'react-bootstrap-table';
 import Button from 'react-bootstrap/Button'
 import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/core/styles';
@@ -202,16 +203,11 @@ function ChoresTDL() {
                     checked={chores.Checked}
                     onChange={updateChoreCheck.bind(index, chores.Checked)} />
                 </td>
+                <td width="20">d</td>
             </tr>
         )
     }
-    const renderDelete = (chores, index) => {
-        return (
-            <tr key={index}>
-                <td>Delete</td>
-            </tr>
-        )
-    }
+
     //<Button variant="danger" size="sm"
     //style={{ height: 28, width: 60 }}>Delete</Button>
 
@@ -323,7 +319,7 @@ function ChoresTDL() {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Chore</th>
+                        <th >Chore</th>
                         <th>Name</th>
                         <th width="150">Completion</th>
                     </tr>

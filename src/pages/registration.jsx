@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+
+
+toast.configure()
 
 function RegistrationScreen() {
     //<Link to="/roomKeyPage"></Link>
@@ -45,8 +51,8 @@ function RegistrationScreen() {
 
 
         } else if (response.data.token == 4321) {
-            console.log(response.data.token)
-            alert("Oops, that email already exists!");
+            console.log(response.data.token);
+            toast.error("Oops, that email already exists!")
         }
     }
 
@@ -55,9 +61,8 @@ function RegistrationScreen() {
     }
 
     return (
-        <div class="user">
+        <div class="user-reg">
             <header class="user__header">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
                 <h1 class="user__title">Registration</h1>
             </header>
             <form class="form" onSubmit={handleSubmit}>
@@ -77,9 +82,10 @@ function RegistrationScreen() {
                     <input type="password" name="pass" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" class="form__input" />
                 </div>
 
-                <button class="btn" type="submit">Register</button>
+                <button class="btn" class="btn btn-lg btn-secondary" id="log-in-btn"
+                    type="submit">Register</button>
             </form>
-            <h1>Click <Link to="/login"> here </Link>  to login if you have an account</h1>
+            <h1 class="back-to-login">Click <Link to="/login"> here </Link>  to login to your account  </h1>
         </div>
     )
 }
