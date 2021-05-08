@@ -10,7 +10,9 @@ const registerSchema = new Schema({
     password: String,
     roomKey: {
         type: String,
-    }
+    },
+    landlord: Boolean,
+
 })
 
 const user = mongoose.model('User', registerSchema);
