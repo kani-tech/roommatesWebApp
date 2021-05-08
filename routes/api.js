@@ -7,6 +7,8 @@ const tdlModel = require('../models/tdl.js')
 const requestModel = require('../models/requestModel.js')
 const choreModel = require('../models/chores.js')
 const nodemailer = require("nodemailer")
+const stripe = require("stripe")("sk_test_51IlJLyHixsK8VUAYxdjHLuclpi1Cb6aMxYDk5LVqmmiUbuS1V4YX4FDW1P1iX7WljWEiMP0yfzQUoJzlEse83ota007X9hFBi5");
+const uuid = require("uuid");
 
 const USER_LOGIN_SUCCESS = 1234;
 const USER_LOGIN_FAIL = 4321;
@@ -43,7 +45,8 @@ userRouter.post('/register', async function (req, res) {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.Email,
-                password: req.body.Password
+                password: req.body.Password,
+                landlord: req.body.Landlord
             })
 
             newUser.save()
@@ -294,4 +297,50 @@ userRouter.post('/updateChores', async function (req, res) {
         token: USER_LOGIN_SUCCESS,
     });
 })
+
+
+userRouter.post('/checkout', async function (req, res) {
+    console.log("Request:", req.body);
+
+    let error;
+    let status;
+    try {
+        const { product, token } = req.body;
+
+        const customer = await stripe.customers.create({
+            email: token.email,
+            source: token.id
+        });
+
+        // const idempotency_key = uuid();
+        const charge = await stripe.charges.create(
+            {
+                amount: product * 100,
+                currency: "cad",
+                customer: customer.id,
+                receipt_email: token.email,
+                description: `Rent paid!`,
+                shipping: {
+                    name: token.card.name,
+                    address: {
+                        line1: token.card.address_line1,
+                        line2: token.card.address_line2,
+                        city: token.card.address_city,
+                        country: token.card.address_country,
+                        postal_code: token.card.address_zip
+                    }
+                }
+            },
+
+        );
+        console.log("Charge:", { charge });
+        status = "success";
+    } catch (error) {
+        console.error("Error:", error);
+        status = "failure";
+    }
+
+    res.json({ error, status });
+});
+
 
