@@ -4,9 +4,6 @@ import axios from 'axios'
 import PropTypes from 'prop-types';
 
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
-import Dashboard from "/Users/kanishksk/Documents/roomatesV3/client/src/pages/dashboard.jsx"
-import Errpage from "/Users/kanishksk/Documents/roomatesV3/client/src/pages/errpage.jsx"
-//import '../stylesheets/login.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

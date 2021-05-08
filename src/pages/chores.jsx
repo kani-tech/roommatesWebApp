@@ -8,10 +8,11 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/core/styles';
-import { green } from '@material-ui/core/colors';
-import { grey } from '@material-ui/core/colors';
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { green, grey } from '@material-ui/core/colors';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 
 const GreenCheckbox = withStyles({
     root: {
@@ -282,6 +283,24 @@ function ChoresTDL() {
         setPassword("");
         localStorage.clear();
     };
+    const columns = [{
+        dataField: 'Item',
+        text: 'Chore',
+        sort: true
+    }, {
+        dataField: 'Name',
+        text: 'Name',
+        sort: true
+    }, {
+        dataField: 'Checked',
+        text: 'Completion',
+        editor: {
+            type: Type.CHECKBOX,
+            value: 'Y:N'
+        },
+    }];
+
+
 
     return (
         <div className="container">
@@ -316,7 +335,7 @@ function ChoresTDL() {
             <span id="error"></span>
             <br></br>
 
-            <Table striped bordered hover>
+            {/* <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th >Chore</th>
@@ -327,7 +346,8 @@ function ChoresTDL() {
                 <tbody>
                     {chores.map(renderChore)}
                 </tbody>
-            </Table>
+            </Table> */}
+            <BootstrapTable keyField='Item' data={chores} columns={columns} />
         </div>
     );
 }

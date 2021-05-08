@@ -3,7 +3,8 @@ import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
+import Form from 'react-bootstrap/Form'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 
 toast.configure()
@@ -16,7 +17,15 @@ function RegistrationScreen() {
     const [lastName, setlastName] = useState('');
     const [password, setPassword] = useState('');
     const [user, setUser] = useState('');
+    const [landlord, setLandlord] = useState(false)
 
+
+
+    const handleLogout = () => {
+        setUser({});
+        setEmail("");
+        localStorage.clear();
+    };
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -25,13 +34,15 @@ function RegistrationScreen() {
       lastName: ${lastName}
       Email: ${email}
       Password: ${password}
+      Landlord: ${landlord}
     `);
 
         const payload = {
             firstName: firstName.charAt(0).toUpperCase() + firstName.slice(1),
             lastName: lastName,
             Email: email,
-            Password: password
+            Password: password,
+            Landlord: landlord
         }
 
         const response = await axios({
@@ -47,6 +58,9 @@ function RegistrationScreen() {
             console.log(response.data.token)
             setUser(response.data);
             localStorage.setItem("user", JSON.stringify(payload));
+            if (landlord === true) {
+                handleLogout()
+            }
             console.log("redirect")
 
 
@@ -57,7 +71,13 @@ function RegistrationScreen() {
     }
 
     if (user) {
-        return <Redirect to="/roomKeyPage"></Redirect>
+        if (landlord === true) {
+            //handleLogout()
+            return <Redirect to="/login"></Redirect>
+        } else {
+            return <Redirect to="/roomKeyPage"></Redirect>
+        }
+
     }
 
     return (
@@ -81,6 +101,15 @@ function RegistrationScreen() {
                 <div class="form__group">
                     <input type="password" name="pass" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" class="form__input" />
                 </div>
+
+                <Form.Check type="checkbox"
+                    label="Are you a landlord?"
+                    defaultChecked={false}
+                    checked={landlord}
+                    onChange={() => setLandlord(!landlord)}
+                />
+
+
 
                 <button class="btn" class="btn btn-lg btn-secondary" id="log-in-btn"
                     type="submit">Register</button>

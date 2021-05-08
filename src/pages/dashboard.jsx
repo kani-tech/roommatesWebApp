@@ -70,6 +70,7 @@ function Dashboard() {
     };
 
 
+
     if (user === null) {
         return (
             <Redirect to="/" />
