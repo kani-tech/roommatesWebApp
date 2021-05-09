@@ -7,6 +7,7 @@ const tdlModel = require('../models/tdl.js')
 const roomSchema = new Schema({
     key: String,
     rent: Number,
+    address: String
 })
 const registerSchema = new Schema({
     firstName: String,
