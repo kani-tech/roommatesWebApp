@@ -11,7 +11,11 @@ const registerSchema = new Schema({
     roomKey: {
         type: String,
     },
+    rooms: [String],
     landlord: Boolean,
+    rentPaid: Boolean,
+    rentCollected: Boolean,
+    rent: Number,
 
 })
 
