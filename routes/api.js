@@ -1,4 +1,5 @@
 const express = require('express')
+const bcrypt = require('bcrypt')
 
 const userRouter = express.Router()
 
@@ -6,6 +7,7 @@ const user = require('../models/userModel.js')
 const tdlModel = require('../models/tdl.js')
 const requestModel = require('../models/requestModel.js')
 const choreModel = require('../models/chores.js')
+const landlord = require('../models/landlordModel.js')
 const nodemailer = require("nodemailer")
 const stripe = require("stripe")("sk_test_51IlJLyHixsK8VUAYxdjHLuclpi1Cb6aMxYDk5LVqmmiUbuS1V4YX4FDW1P1iX7WljWEiMP0yfzQUoJzlEse83ota007X9hFBi5");
 const uuid = require("uuid");
@@ -28,10 +30,12 @@ userRouter.get('/', function (req, res) {
 
 userRouter.post('/register', async function (req, res) {
     console.log('Body:', req.body)
-    console.log('Password', req.body.Password)
+    console.log('Password mpw', req.body.Password)
+
 
     try {
         let existEmail = await user.findOne({ email: req.body.Email });
+
         if (existEmail) {
             res.send({
                 token: USER_LOGIN_FAIL
@@ -41,15 +45,30 @@ userRouter.post('/register', async function (req, res) {
             res.send({
                 token: USER_LOGIN_SUCCESS
             })
-            const newUser = new user({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.Email,
-                password: req.body.Password,
-                landlord: req.body.Landlord
-            })
+            if (req.body.Landlord) {
+                const newUser = new user({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.Email,
+                    password: bcrypt.hashSync(req.body.Password, 5),
+                    rooms: [],
+                    landlord: req.body.Landlord,
+                    rentCollected: false
+                })
+                newUser.save()
+            } else {
+                const newUser = new user({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.Email,
+                    password: bcrypt.hashSync(req.body.Password, 5),
+                    landlord: req.body.Landlord,
+                    rentPaid: false,
+                })
 
-            newUser.save()
+                newUser.save()
+            }
+
         }
     } catch (err) {
         console.log(err);
@@ -99,20 +118,21 @@ userRouter.post('/login', async function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
     const body = req.body;
-    console.log(email)
-    console.log(body)
-    console.log(password)
+    console.log('email', email)
+    console.log('body', body)
+    console.log('password')
     user.findOne({ email: email }, await function (err, foundUser) {
         console.log(foundUser);
         if (err) {
             console.log(err)
-        } else if (foundUser.password == password) {
-            console.log(1)
+        } else if (bcrypt.compareSync(password, foundUser.password)) {
+            //console.log(1)
             res.send({
                 token: USER_LOGIN_SUCCESS,
                 email: email,
                 name: foundUser.firstName,
-                roomKey: foundUser.roomKey
+                roomKey: foundUser.roomKey,
+                landlord: foundUser.landlord
             })
         } else {
             res.send({
@@ -201,6 +221,17 @@ userRouter.post('/toDoDelete', async function (req, res) {
     })
 })
 
+userRouter.post('/choreDelete', async function (req, res) {
+    const id = req.body.itemID;
+    choreModel.findByIdAndRemove(id, function (err, docs) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log('removed', docs)
+        }
+    })
+})
+
 userRouter.post('/addrequest', async function (req, res) {
     const roomkey = req.body.roomkey
     const title = req.body.title;
@@ -256,7 +287,6 @@ userRouter.post('/getcomplaints', async function (req, res) {
 
 userRouter.post('/choresDisplay', async function (req, res) {
     const roomkey = req.body.roomkey;
-    //console.log(roomkey);
     choreModel.find({ roomKey: roomkey }, await function (err, foundMates) {
         //console.log(foundMates)
         if (err) {
@@ -340,7 +370,12 @@ userRouter.post('/checkout', async function (req, res) {
         status = "failure";
     }
 
+    if (status === "success")
+        user.updateOne({ email: req.body.email }, { rentPaid: true }, function (err) {
+            if (err) {
+                console.log(err)
+            }
+        });
+
     res.json({ error, status });
 });
-
-
