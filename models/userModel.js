@@ -3,6 +3,11 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 const tdlModel = require('../models/tdl.js')
 
+
+const roomSchema = new Schema({
+    key: String,
+    rent: Number,
+})
 const registerSchema = new Schema({
     firstName: String,
     lastName: String,
@@ -11,7 +16,7 @@ const registerSchema = new Schema({
     roomKey: {
         type: String,
     },
-    rooms: [String],
+    rooms: [roomSchema],
     landlord: Boolean,
     rentPaid: Boolean,
     rentCollected: Boolean,
