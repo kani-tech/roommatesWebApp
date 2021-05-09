@@ -8,11 +8,10 @@ import MyNavBar from '../components/navbar.jsx'
 import StripeCheckout from 'react-stripe-checkout'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
-
+import LandlordNavBar from '../components/landlordnavbar.jsx'
 
 toast.configure()
-function PayRent() {
+function Addroom() {
     const [roomKey, setRoomKey] = useState("");
     const [user, setUser] = useState("");
     const [rent, setRent] = useState(0)
@@ -24,14 +23,10 @@ function PayRent() {
         if (currUser) {
             setUser(currUser.name);
             setRoomKey(currUser.roomKey);
-            setRent(600);
-            setEmail(currUser.email)
         } else {
             setUser(null)
         }
     }, 1);
-
-
 
 
     const handleLogout = () => {
@@ -44,9 +39,7 @@ function PayRent() {
     async function handleToken(token) {
         const payload = {
             token: token,
-            product: rent,
-            user: user,
-            email: email
+            product: rent
         }
         const response = await axios({
             url: 'http://localhost:4000/api/checkout',
@@ -58,31 +51,44 @@ function PayRent() {
         const { status } = response.data
         if (status === 'success') {
             toast.success('Payment Received!! Check your email for details')
-
         } else {
             toast.error('Uh oh something went wrong')
         }
-
     }
+
     return (
         <div>
-            <MyNavBar logout={handleLogout} />
-            <RentCard
-                rent={600}
-                date={'April 30th, 2021'} />
-            <StripeCheckout
-                stripeKey="pk_test_51IlJLyHixsK8VUAY3QUDK5bIxd742as0tLWZmmNh8493DuOyxoEFrAk5aFhWYanPz8SUlbKYcg95Wh7DkfydSzPV008XPcmnCe"
-                token={handleToken}
-                billingAddress
-                shippingAddress
-                amount={rent * 100}
-                name={'rent'}
-            />
+            <LandlordNavBar logout={2} />
+            <div className="">
+                <h1 className=""> Enter your request </h1>
+                <form onSubmit={2} className="">
+                    <div className="">
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Title"
+
+                        />
+                    </div>
+                    <div className="">
+                        <textarea
+                            placeholder="body"
+                            name="body"
+                            cols="50"
+                            rows="5"
+                        >
+
+                        </textarea>
+                    </div>
+
+                    <button>Submit</button>
+                </form>
+
+            </div>
 
         </div>
 
     )
-
 }
 
-export default PayRent;
+export default Addroom;

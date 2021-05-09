@@ -5,7 +5,7 @@ import { Form, Button, FormControl, Nav, NavDropdown } from 'react-bootstrap'
 import '../stylesheets/navbar.css'
 
 
-const MyNavBar = (props) => (
+const LandlordNavBar = (props) => (
     <div className="navbar" fluid>
         <Navbar bg="light" expand="lg" >
 
@@ -15,9 +15,8 @@ const MyNavBar = (props) => (
 
                 <Nav className="mr-auto nav-text">
                     <Nav.Link href="/dashboard">Home</Nav.Link>
-                    <Nav.Link href="/chores">Tasks</Nav.Link>
-                    <Nav.Link href="/complaints">Requests</Nav.Link>
-                    <Nav.Link href="/payrent">Finances</Nav.Link>
+                    <Nav.Link href="/addroom">Add Room</Nav.Link>
+                    <Nav.Link href="/payrent">Complaints</Nav.Link>
                 </Nav>
 
 
@@ -37,7 +36,7 @@ const MyNavBar = (props) => (
 )
 
 
-export default MyNavBar
+export default LandlordNavBar
 
 
 

@@ -9,10 +9,15 @@ import Button from 'react-bootstrap/Button'
 import Checkbox from '@material-ui/core/Checkbox';
 import { withStyles } from '@material-ui/core/styles';
 import { green, grey } from '@material-ui/core/colors';
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+
 
 const GreenCheckbox = withStyles({
     root: {
@@ -152,22 +157,10 @@ function ChoresTDL() {
             })
             if (response.data.token == 1234) {
                 toast.success('Successfully added!!')
-                /*
-                console.log("success");
-                document.getElementById("error").innerHTML = ""*/
             } else if (response.data.token == 4321) {
                 toast.error('Please enter the name of a roommate')
-                /*let error = document.getElementById("error");
-                error.innerHTML = "<span style='color: red;'>" +
-                    "Please enter the name of a roommate</span>"
-                console.log("fail");*/
             } else {
                 toast.warn('Oops! That chore already exists, make sure to complete it!')
-                /*
-                let error = document.getElementById("error");
-                error.innerHTML = "<span style='color: red;'>" +
-                    "Oops! That chore already exists, make sure to complete it!</span>"
-                console.log("fail");*/
             }
             setFlipper(flipper + 1);
         }
@@ -204,8 +197,11 @@ function ChoresTDL() {
                     checked={chores.Checked}
                     onChange={updateChoreCheck.bind(index, chores.Checked)} />
                 </td>
-                <td width="20">d</td>
-            </tr>
+                <td width="1"><IconButton
+                    onClick={deleteChore.bind(index, index)}>
+                    <DeleteIcon />
+                </IconButton></td>
+            </tr >
         )
     }
 
@@ -255,19 +251,20 @@ function ChoresTDL() {
     }
 
     function deleteChore(id) {
+        console.log('dababy')
         console.log(id);
         const payload = {
-            itemID: items[id]._id
+            itemID: chores[id]._id
         }
 
         async function deleteTodo() {
             const response = await axios({
-                url: 'http://localhost:4000/api/toDoDelete',
+                url: 'http://localhost:4000/api/choreDelete',
                 method: 'post',
                 data: payload
             })
         }
-        console.log(items[id]._id)
+        console.log(chores[id]._id)
         deleteTodo()
         setItems(prevItems => {
             return prevItems.filter((item, index) => {
@@ -283,14 +280,18 @@ function ChoresTDL() {
         setPassword("");
         localStorage.clear();
     };
+
+
     const columns = [{
         dataField: 'Item',
         text: 'Chore',
-        sort: true
+        sort: true,
+        filter: textFilter()
     }, {
         dataField: 'Name',
         text: 'Name',
-        sort: true
+        sort: true,
+        filter: textFilter()
     }, {
         dataField: 'Checked',
         text: 'Completion',
@@ -300,11 +301,17 @@ function ChoresTDL() {
         },
     }];
 
-
+    const selectRow = {
+        mode: 'checkbox',
+        clickToSelect: true,
+        selected: [1, 3]
+        //onSelect: this.handleOnSelect,
+        //onSelectAll: this.handleOnSelectAll
+    };
 
     return (
-        <div className="container">
-            <MyNavBar logout={handleLogout} />
+        <div className="container navbar">
+            <MyNavBar logout={handleLogout} className="" />
             <div className="heading">
                 <h1>To-Do List</h1>
             </div>
@@ -335,7 +342,7 @@ function ChoresTDL() {
             <span id="error"></span>
             <br></br>
 
-            {/* <Table striped bordered hover>
+            <Table striped bordered hover>
                 <thead>
                     <tr>
                         <th >Chore</th>
@@ -346,8 +353,25 @@ function ChoresTDL() {
                 <tbody>
                     {chores.map(renderChore)}
                 </tbody>
-            </Table> */}
-            <BootstrapTable keyField='Item' data={chores} columns={columns} />
+            </Table>
+            {/* <ToolkitProvider
+                keyField="id"
+                data={chores}
+                columns={columns}
+                selectRow={selectRow}
+            >
+                {
+                    props => (
+                        <div>
+                            <hr />
+                            <BootstrapTable
+                                {...props.baseProps}
+                                filter={filterFactory()}
+                            />
+                        </div>
+                    )
+                }
+            </ToolkitProvider> */}
         </div>
     );
 }

@@ -1,0 +1,15 @@
+.table {
+    width:50vw;
+    position: relative;
+    margin-left:auto;
+    margin-right:auto
+}
+
+.heading{
+    position: relative;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+}

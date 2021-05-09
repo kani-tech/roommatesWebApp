@@ -12,6 +12,8 @@ import EnterRoomKey from "./pages/pageafterregister.jsx"
 import ChoresTDL from "./pages/chores.jsx"
 import Complaints from "./pages/complaints.jsx"
 import PayRent from "./pages/payment.jsx"
+import Addroom from "./pages/addroom.jsx"
+
 
 
 
@@ -30,6 +32,8 @@ function App() {
         <Route exact path="/chores" component={ChoresTDL} />
         <Route exact path="/complaints" component={Complaints} />
         <Route exact path="/payrent" component={PayRent} />
+        <Route exact path="/addroom" component={Addroom} />
+
         <Route component={Errpage} />
         <Redirect to="/404" />
       </Switch>

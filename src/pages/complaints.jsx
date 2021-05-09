@@ -3,6 +3,8 @@ import Request from "../components/requestPost.jsx";
 import axios from 'axios'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
+import '../stylesheets/complaints.css'
+
 
 function Complaints() {
     const [roomKey, setRoomKey] = useState("");
@@ -85,7 +87,7 @@ function Complaints() {
             return null;
         } else {
             return posts.map((post, index) => (
-                <div key={index}>
+                <div key={index} className="complaints">
                     <h3>{post.title}</h3>
                     <p>{post.request}</p>
                 </div>
@@ -103,33 +105,40 @@ function Complaints() {
     return (
         <div>
             <MyNavBar logout={handleLogout} />
-            <h1> Enter your request </h1>
-            <form onSubmit={handleSubmit}>
-                <div className="form-input">
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Title"
-                        value={title}
-                        onChange={e => setTitle(e.target.value)}
-                    />
-                </div>
-                <div className="form-input">
-                    <textarea
-                        placeholder="body"
-                        name="body"
-                        cols="50"
-                        rows="5"
-                        value={request}
-                        onChange={e => setRequest(e.target.value)}
-                    >
 
-                    </textarea>
-                </div>
+            <div className="main-div">
+                <h1 className="request"> Enter your request </h1>
+                <form onSubmit={handleSubmit} className="main-form">
+                    <div className="form-request">
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="Title"
+                            value={title}
+                            onChange={e => setTitle(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-request">
+                        <textarea
+                            placeholder="body"
+                            name="body"
+                            cols="50"
+                            rows="5"
+                            value={request}
+                            onChange={e => setRequest(e.target.value)}
+                        >
 
-                <button>Submit</button>
-            </form>
-            <div>
+                        </textarea>
+                    </div>
+
+                    <button>Submit</button>
+                </form>
+
+            </div>
+
+
+
+            <div className="complaints">
                 {posts.map(renderPosts)}
             </div>
         </div>

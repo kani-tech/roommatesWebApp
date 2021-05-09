@@ -72,7 +72,6 @@ function RegistrationScreen() {
 
     if (user) {
         if (landlord === true) {
-            //handleLogout()
             return <Redirect to="/login"></Redirect>
         } else {
             return <Redirect to="/roomKeyPage"></Redirect>
@@ -108,8 +107,6 @@ function RegistrationScreen() {
                     checked={landlord}
                     onChange={() => setLandlord(!landlord)}
                 />
-
-
 
                 <button class="btn" class="btn btn-lg btn-secondary" id="log-in-btn"
                     type="submit">Register</button>

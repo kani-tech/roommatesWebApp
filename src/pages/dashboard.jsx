@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
+import LandlordNavBar from '../components/landlordnavbar.jsx'
+import LandlordCard from '../components/landlordCard.jsx'
+
+
 import Navbar from 'react-bootstrap/Navbar'
 import { Form, Button, FormControl, Nav, NavDropdown } from 'react-bootstrap'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table'
+import '../stylesheets/table.css'
+
 
 function Dashboard() {
     const [email, setEmail] = useState('');
@@ -12,13 +18,16 @@ function Dashboard() {
     const [user, setUser] = useState('');
     const [roomKey, setRoomKey] = useState('')
     const [roomies, setRoomies] = useState([])
+    const [landlord, setlandlord] = useState(false)
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
+        console.log('currUser', currUser)
         if (currUser) {
             setEmail(currUser.email);
             setUser(currUser.name);
             setRoomKey(currUser.roomKey)
+            setlandlord(currUser.landlord)
         } else {
             setUser(null)
         }
@@ -71,15 +80,28 @@ function Dashboard() {
 
 
 
+
     if (user === null) {
         return (
             <Redirect to="/" />
         )
-    } else {
+    } else if (landlord == true) {
         return (
             <div>
-                <MyNavBar logout={handleLogout} />
-                <h1> Welcome to da HUB {user} with Room Key: {roomKey}</h1>
+                <LandlordNavBar logout={handleLogout} />
+                <h1>Your properties</h1>
+                <LandlordCard />
+            </div>
+        )
+    }
+
+
+    else {
+        return (
+            <div>
+
+                <MyNavBar logout={handleLogout} first={'Tasks'} />
+                <h1 className='heading'> Welcome to Roommates {user} with Room Key: {roomKey}</h1>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
