@@ -12,7 +12,7 @@ import LandlordNavBar from '../components/landlordnavbar.jsx'
 
 toast.configure()
 function Addroom() {
-    const [roomKey, setRoomKey] = useState("");
+    const [roomKey, setRoomKey] = useState(false);
     const [user, setUser] = useState("");
     const [rent, setRent] = useState(0)
     const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ function Addroom() {
         const currUser = JSON.parse(localStorage.getItem('user'));
         if (currUser) {
             setUser(currUser.name);
-            setRoomKey(currUser.roomKey);
+            setEmail(currUser.email);
         } else {
             setUser(null)
         }
@@ -36,52 +36,63 @@ function Addroom() {
         localStorage.clear();
     };
 
-    async function handleToken(token) {
+    const handleSubmit = async e => {
+        e.preventDefault()
+        const key = makeid(6)
+        console.log('key', key)
+        setRoomKey(key)
+
         const payload = {
-            token: token,
-            product: rent
+            roomkey: key,
+            email: email,
+            rent: rent,
         }
+
         const response = await axios({
-            url: 'http://localhost:4000/api/checkout',
+            url: 'http://localhost:4000/api/addroom',
             method: 'post',
             data: payload
         })
 
+        console.log(response.data)
 
-        const { status } = response.data
-        if (status === 'success') {
-            toast.success('Payment Received!! Check your email for details')
-        } else {
-            toast.error('Uh oh something went wrong')
-        }
+        toast.success(`Your key is ${key}`)
+
+        e.target.reset()
+
+
     }
 
+
+    function makeid(length) {
+        var result = [];
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result.push(characters.charAt(Math.floor(Math.random() *
+                charactersLength)));
+        }
+        return result.join('');
+    }
+
+    console.log(roomKey)
     return (
         <div>
-            <LandlordNavBar logout={2} />
+            <LandlordNavBar logout={handleLogout} />
             <div className="">
-                <h1 className=""> Enter your request </h1>
-                <form onSubmit={2} className="">
+                <h1 className=""> Just type in your rent to get your key! </h1>
+                <form onSubmit={handleSubmit} className="">
                     <div className="">
                         <input
-                            type="text"
-                            name="title"
-                            placeholder="Title"
-
+                            type="number"
+                            name="Rent Amount"
+                            placeholder="Rent Amount"
+                            value={rent}
+                            onChange={e => setRent(e.target.value)}
                         />
                     </div>
-                    <div className="">
-                        <textarea
-                            placeholder="body"
-                            name="body"
-                            cols="50"
-                            rows="5"
-                        >
 
-                        </textarea>
-                    </div>
-
-                    <button>Submit</button>
+                    <button>Produce Key</button>
                 </form>
 
             </div>
@@ -89,6 +100,8 @@ function Addroom() {
         </div>
 
     )
+
+
 }
 
 export default Addroom;

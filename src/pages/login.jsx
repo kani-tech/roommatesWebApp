@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 // Pages
@@ -46,9 +48,7 @@ const LoginPage = () => {
             console.log(user)
             localStorage.setItem("user", JSON.stringify(response.data));
         } else {
-            let error = document.getElementById("error");
-            error.innerHTML = "<span style='color: red;'>" +
-                "Invalid Email and/or Password</span>"
+            toast.error('Invalid username or password')
         }
     }
 

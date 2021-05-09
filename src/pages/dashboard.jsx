@@ -19,10 +19,10 @@ function Dashboard() {
     const [roomKey, setRoomKey] = useState('')
     const [roomies, setRoomies] = useState([])
     const [landlord, setlandlord] = useState(false)
+    const [rooms, setRooms] = useState('');
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
-        console.log('currUser', currUser)
         if (currUser) {
             setEmail(currUser.email);
             setUser(currUser.name);
@@ -65,10 +65,8 @@ function Dashboard() {
         )
     }
 
-
-
-
     // console.log(roomies)
+
 
 
     const handleLogout = () => {
@@ -78,8 +76,38 @@ function Dashboard() {
         localStorage.clear();
     };
 
+    const getRooms = async () => {
+        const payload = {
+            email: email
+        }
 
+        const response = await axios({
+            url: 'http://localhost:4000/api/getRooms',
+            method: 'post',
+            data: payload
+        })
 
+        console.log(response.data.rooms)
+        setRooms(response.data.rooms)
+    }
+
+    useEffect(() => {
+        getRooms()
+    }, [landlord])
+
+    console.log(rooms)
+
+    const renderCards = (rooms, index) => {
+        return (
+            <div>
+                <LandlordCard
+                    key={index}
+                    id={index}
+
+                />
+            </div>
+        )
+    }
 
     if (user === null) {
         return (
@@ -93,13 +121,9 @@ function Dashboard() {
                 <LandlordCard />
             </div>
         )
-    }
-
-
-    else {
+    } else {
         return (
             <div>
-
                 <MyNavBar logout={handleLogout} first={'Tasks'} />
                 <h1 className='heading'> Welcome to Roommates {user} with Room Key: {roomKey}</h1>
                 <Table striped bordered hover>
@@ -114,11 +138,9 @@ function Dashboard() {
                         {roomies.map(renderUser)}
                     </tbody>
                 </Table>
-
             </div>
         )
     }
-
 }
 
 export default Dashboard;

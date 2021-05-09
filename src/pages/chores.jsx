@@ -13,10 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
-import ToolkitProvider from 'react-bootstrap-table2-toolkit';
+import '../stylesheets/chores.css'
 
 
 const GreenCheckbox = withStyles({
@@ -59,7 +56,7 @@ function ChoresTDL() {
         return mates.firstName;
     }
 
-    const job = schedule.scheduleJob('50 52 19 * * *', async function () {
+    const job = schedule.scheduleJob('0 07 0 * * *', async function () {
 
         async function getInfo() {
             const response = await axios({
@@ -281,41 +278,11 @@ function ChoresTDL() {
         localStorage.clear();
     };
 
-
-    const columns = [{
-        dataField: 'Item',
-        text: 'Chore',
-        sort: true,
-        filter: textFilter()
-    }, {
-        dataField: 'Name',
-        text: 'Name',
-        sort: true,
-        filter: textFilter()
-    }, {
-        dataField: 'Checked',
-        text: 'Completion',
-        editor: {
-            type: Type.CHECKBOX,
-            value: 'Y:N'
-        },
-    }];
-
-    const selectRow = {
-        mode: 'checkbox',
-        clickToSelect: true,
-        selected: [1, 3]
-        //onSelect: this.handleOnSelect,
-        //onSelectAll: this.handleOnSelectAll
-    };
-
     return (
-        <div className="container navbar">
-            <MyNavBar logout={handleLogout} className="" />
-            <div className="heading">
+        <div>
+            <MyNavBar logout={handleLogout} />
+            <div className="form_td">
                 <h1>To-Do List</h1>
-            </div>
-            <div className="form">
                 <input onChange={e => setInputText(e.target.value)} type="text" value={inputText} />
                 <button onClick={addItem}>
                     <span>Add</span>
@@ -327,10 +294,9 @@ function ChoresTDL() {
                 </ul>
             </div>
 
-            <div className="heading">
-                <h1>Chores List</h1>
-            </div>
-            <div className="form">
+
+            <div className="form_cl">
+                <h1 className="chores_list">Chores List</h1>
                 <span>Item </span>
                 <input onChange={e => setChoreInputText(e.target.value)} type="text" value={choreInputText} />
                 <span> Name </span>
@@ -354,24 +320,6 @@ function ChoresTDL() {
                     {chores.map(renderChore)}
                 </tbody>
             </Table>
-            {/* <ToolkitProvider
-                keyField="id"
-                data={chores}
-                columns={columns}
-                selectRow={selectRow}
-            >
-                {
-                    props => (
-                        <div>
-                            <hr />
-                            <BootstrapTable
-                                {...props.baseProps}
-                                filter={filterFactory()}
-                            />
-                        </div>
-                    )
-                }
-            </ToolkitProvider> */}
         </div>
     );
 }

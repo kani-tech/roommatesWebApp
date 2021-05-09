@@ -31,7 +31,20 @@ function PayRent() {
         }
     }, 1);
 
+    const schedule = require('node-schedule');
 
+    const job = schedule.scheduleJob('0 0 0 1 * *', async function () {
+
+        async function resetRent() {
+            let roomies = 1
+            const response = await axios({
+                url: 'http://localhost:4000/api/rent',
+                method: 'post',
+                data: { email: email }
+            })
+        }
+        resetRent();
+    });
 
 
     const handleLogout = () => {
