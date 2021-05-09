@@ -353,7 +353,6 @@ userRouter.post('/checkout', async function (req, res) {
             source: token.id
         });
 
-        // const idempotency_key = uuid();
         const charge = await stripe.charges.create(
             {
                 amount: product * 100,
