@@ -180,6 +180,17 @@ userRouter.post('/chore', async function (req, res) {
     }
 })
 
+userRouter.post('/rent', async function (req, res) {
+    console.log(req.body);
+    let update = await user.findOneAndUpdate({ email: req.body.email }, { rentPaid: false });
+    console.log(update);
+    update = await user.findOne({ Item: req.body.email });
+    console.log(update);
+    res.send({
+        token: USER_LOGIN_SUCCESS,
+    });
+})
+
 userRouter.post('/choreCheck', async function (req, res) {
     console.log(req.body);
     let update = await choreModel.findOneAndUpdate({ Item: req.body.Item }, { Checked: !(req.body.Checked) });
@@ -379,3 +390,33 @@ userRouter.post('/checkout', async function (req, res) {
 
     res.json({ error, status });
 });
+
+userRouter.post('/addroom', function (req, res) {
+
+    console.log('body', req.body)
+
+    const roominfo = { key: req.body.roomkey, rent: req.body.rent }
+
+    user.findOneAndUpdate({ email: req.body.email }, { $push: { rooms: roominfo } },
+        function (err, success) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(success)
+            }
+        })
+
+    res.send({
+        key: req.body.roomkey
+    })
+})
+
+userRouter.post('/getRooms', async function (req, res) {
+    const email = req.body.email
+
+    user.find({ email: email }, await function (err, foundTenants) {
+        res.send(foundTenants[0])
+
+    })
+
+})
