@@ -10,6 +10,8 @@ import { Form, Button, FormControl, Nav, NavDropdown } from 'react-bootstrap'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table'
 import '../stylesheets/table.css'
+import '../stylesheets/landlordcard.css'
+
 
 
 function Dashboard() {
@@ -99,11 +101,12 @@ function Dashboard() {
 
     const renderCards = (rooms, index) => {
         return (
-            <div>
+            <div className='landlordcard'>
                 <LandlordCard
                     key={index}
                     id={index}
-
+                    roomkey={rooms.key}
+                    rent={rooms.rent}
                 />
             </div>
         )
@@ -118,7 +121,9 @@ function Dashboard() {
             <div>
                 <LandlordNavBar logout={handleLogout} />
                 <h1>Your properties</h1>
-                <LandlordCard />
+                <div>
+                    {rooms.map(renderCards)}
+                </div>
             </div>
         )
     } else {

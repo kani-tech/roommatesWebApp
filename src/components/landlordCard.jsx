@@ -11,6 +11,9 @@ const LandlordCard = (props) => (
     <Card className="card">
         <Card.Body>
             <Card.Title>Room: {props.roomkey}</Card.Title>
+
+            <Card.Subtitle className="mb-2 text-muted">The rent for this property is {props.rent}</Card.Subtitle>
+
             <Card.Subtitle className="mb-2 text-muted">Here's the update for this month</Card.Subtitle>
             <ListGroup variant="flush">
                 <ListGroup.Item>All rent paid: {props.rentpaid}</ListGroup.Item>
