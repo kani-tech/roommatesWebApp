@@ -7,7 +7,6 @@ const user = require('../models/userModel.js')
 const tdlModel = require('../models/tdl.js')
 const requestModel = require('../models/requestModel.js')
 const choreModel = require('../models/chores.js')
-const landlord = require('../models/landlordModel.js')
 const nodemailer = require("nodemailer")
 const stripe = require("stripe")("sk_test_51IlJLyHixsK8VUAYxdjHLuclpi1Cb6aMxYDk5LVqmmiUbuS1V4YX4FDW1P1iX7WljWEiMP0yfzQUoJzlEse83ota007X9hFBi5");
 const uuid = require("uuid");
@@ -126,7 +125,6 @@ userRouter.post('/login', async function (req, res) {
         if (err) {
             console.log(err)
         } else if (bcrypt.compareSync(password, foundUser.password)) {
-            //console.log(1)
             res.send({
                 token: USER_LOGIN_SUCCESS,
                 email: email,
@@ -394,7 +392,7 @@ userRouter.post('/addroom', function (req, res) {
 
     console.log('body', req.body)
 
-    const roominfo = { key: req.body.roomkey, rent: req.body.rent }
+    const roominfo = { key: req.body.roomkey, rent: req.body.rent, address: req.body.address }
 
     user.findOneAndUpdate({ email: req.body.email }, { $push: { rooms: roominfo } },
         function (err, success) {
@@ -406,16 +404,39 @@ userRouter.post('/addroom', function (req, res) {
         })
 
     res.send({
-        key: req.body.roomkey
+        key: req.body.roomkey,
+        address: req.body.address
     })
 })
 
+
+
 userRouter.post('/getRooms', async function (req, res) {
     const email = req.body.email
+    var rentPaid = []
 
-    user.find({ email: email }, await function (err, foundTenants) {
-        res.send(foundTenants[0])
+    user.find({ email: email }, async function (err, foundTenants) {
+        console.log(foundTenants[0].rooms)
+        const allrooms = foundTenants[0].rooms
+
+        for (let i = 0; i < allrooms.length; i++) {
+            const currkey = allrooms[i].key
+            console.log('key', currkey)
+            await user.find({ roomKey: currkey }, function (err, foundMates) {
+                console.log('test', foundMates)
+
+                rentPaid.push(foundMates)
+                //console.log(rentPaid)
+
+            })
+        }
+
+        res.send(
+            {
+                tenants: foundTenants[0],
+                rentPaid: rentPaid,
+            })
+
 
     })
-
 })
