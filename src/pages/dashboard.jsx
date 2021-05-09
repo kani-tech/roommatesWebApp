@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch, Link, Redirect } from "react-router-dom"
 import MyNavBar from '../components/navbar.jsx'
 import LandlordNavBar from '../components/landlordnavbar.jsx'
 import LandlordCard from '../components/landlordCard.jsx'
+import Example from '../components/rentModal.jsx'
+
 
 
 import Navbar from 'react-bootstrap/Navbar'
@@ -21,7 +23,7 @@ function Dashboard() {
     const [roomKey, setRoomKey] = useState('')
     const [roomies, setRoomies] = useState([])
     const [landlord, setlandlord] = useState(false)
-    const [rooms, setRooms] = useState('');
+    const [rooms, setRooms] = useState([]);
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -67,8 +69,6 @@ function Dashboard() {
         )
     }
 
-    // console.log(roomies)
-
 
 
     const handleLogout = () => {
@@ -78,26 +78,32 @@ function Dashboard() {
         localStorage.clear();
     };
 
-    const getRooms = async () => {
-        const payload = {
-            email: email
+    useEffect(() => {
+        if (!landlord) {
+            return;
         }
 
-        const response = await axios({
-            url: 'http://localhost:4000/api/getRooms',
-            method: 'post',
-            data: payload
-        })
+        const getRooms = async () => {
+            const payload = {
+                email: email
+            }
 
-        console.log(response.data.rooms)
-        setRooms(response.data.rooms)
-    }
+            const response = await axios({
+                url: 'http://localhost:4000/api/getRooms',
+                method: 'post',
+                data: payload
+            })
 
-    useEffect(() => {
+            console.log(response.data)
+            setRooms(response.data.tenants.rooms)
+        }
+
         getRooms()
+
     }, [landlord])
 
-    console.log(rooms)
+
+
 
     const renderCards = (rooms, index) => {
         return (
@@ -105,11 +111,14 @@ function Dashboard() {
                 <LandlordCard
                     key={index}
                     id={index}
+                    address={rooms.address}
                     roomkey={rooms.key}
                     rent={rooms.rent}
                 />
+
             </div>
         )
+
     }
 
     if (user === null) {
@@ -117,15 +126,31 @@ function Dashboard() {
             <Redirect to="/" />
         )
     } else if (landlord == true) {
-        return (
-            <div>
-                <LandlordNavBar logout={handleLogout} />
-                <h1>Your properties</h1>
+
+        if (!rooms.length) {
+            return (
                 <div>
-                    {rooms.map(renderCards)}
+                    <LandlordNavBar logout={handleLogout} />
+                    <h1>No properties yet head over to add room to get started</h1>
                 </div>
-            </div>
-        )
+            )
+
+        } else {
+            return (
+                <div>
+                    <LandlordNavBar logout={handleLogout} />
+                    <h1>Your properties</h1>
+                    <div>
+                        {rooms.map(renderCards)}
+                    </div>
+                </div>
+            )
+        }
+
+
+
+
+
     } else {
         return (
             <div>

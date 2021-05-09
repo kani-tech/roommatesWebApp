@@ -17,6 +17,8 @@ function Addroom() {
     const [rent, setRent] = useState(0)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [address, setAddress] = useState('');
+
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -46,6 +48,7 @@ function Addroom() {
             roomkey: key,
             email: email,
             rent: rent,
+            address: address
         }
 
         const response = await axios({
@@ -80,8 +83,17 @@ function Addroom() {
         <div>
             <LandlordNavBar logout={handleLogout} />
             <div className="">
-                <h1 className=""> Just type in your rent to get your key! </h1>
+                <h1 className=""> Just give us some information to get started </h1>
                 <form onSubmit={handleSubmit} className="">
+                    <div className="">
+                        <input
+                            type="text"
+                            name="address"
+                            placeholder="address"
+                            value={address}
+                            onChange={e => setAddress(e.target.value)}
+                        />
+                    </div>
                     <div className="">
                         <input
                             type="number"

@@ -4,26 +4,79 @@ import Card from 'react-bootstrap/Card'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { Form, Button, FormControl, Nav, NavDropdown } from 'react-bootstrap'
 import Example from './rentModal'
-import '../stylesheets/card.css'
+import Modal from 'react-bootstrap/Modal'
 
-const LandlordCard = (props) => (
+
+function LandlordCard(props) {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
+    return (
+
+        <Card className="card">
+            <Card.Body>
+                <Card.Title>Address: {props.address}</Card.Title>
+                <Card.Title></Card.Title>
+
+                <Card.Subtitle className="mb-2 text-muted">The rent for this property is {props.rent}</Card.Subtitle><br />
+
+                <Card.Subtitle className="mb-2 text-muted">Here's the update for this month</Card.Subtitle>
+                <ListGroup variant="flush">
+
+                    <ListGroup.Item>All rent paid: {props.rentpaid}</ListGroup.Item>
+                    <ListGroup.Item>Active complaints: {props.complaints}</ListGroup.Item>
+                </ListGroup>
+            </Card.Body>
+            <>
+                <Button variant="primary" onClick={handleShow}>
+                    Further information
+        </Button>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Roomkey {props.roomkey}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+            </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+            </Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        </Card>
+
+    );
+
+
+
+}
+/*const LandlordCard = (props) => (
 
     <Card className="card">
         <Card.Body>
-            <Card.Title>Room: {props.roomkey}</Card.Title>
+            <Card.Title>Address: {props.address}</Card.Title>
+            <Card.Title></Card.Title>
 
-            <Card.Subtitle className="mb-2 text-muted">The rent for this property is {props.rent}</Card.Subtitle>
+            <Card.Subtitle className="mb-2 text-muted">The rent for this property is {props.rent}</Card.Subtitle><br />
 
             <Card.Subtitle className="mb-2 text-muted">Here's the update for this month</Card.Subtitle>
             <ListGroup variant="flush">
+
                 <ListGroup.Item>All rent paid: {props.rentpaid}</ListGroup.Item>
                 <ListGroup.Item>Active complaints: {props.complaints}</ListGroup.Item>
             </ListGroup>
         </Card.Body>
-        <Example />
+        <Example>{props}</Example>
     </Card>
 )
-
+*/
 export default LandlordCard
 
 

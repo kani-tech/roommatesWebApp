@@ -8,6 +8,9 @@ import MyNavBar from '../components/navbar.jsx'
 import StripeCheckout from 'react-stripe-checkout'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import '../stylesheets/card.css'
+
+
 
 
 
@@ -83,14 +86,19 @@ function PayRent() {
             <RentCard
                 rent={600}
                 date={'April 30th, 2021'} />
-            <StripeCheckout
-                stripeKey="pk_test_51IlJLyHixsK8VUAY3QUDK5bIxd742as0tLWZmmNh8493DuOyxoEFrAk5aFhWYanPz8SUlbKYcg95Wh7DkfydSzPV008XPcmnCe"
-                token={handleToken}
-                billingAddress
-                shippingAddress
-                amount={rent * 100}
-                name={'rent'}
-            />
+            <div className='button-checkout'>
+                <StripeCheckout
+                    stripeKey="pk_test_51IlJLyHixsK8VUAY3QUDK5bIxd742as0tLWZmmNh8493DuOyxoEFrAk5aFhWYanPz8SUlbKYcg95Wh7DkfydSzPV008XPcmnCe"
+                    token={handleToken}
+                    billingAddress
+                    shippingAddress
+                    amount={rent * 100}
+                    name={'rent'}
+                    fluid
+                />
+
+            </div>
+
 
         </div>
 

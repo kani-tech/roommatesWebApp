@@ -2,8 +2,14 @@
    width: 20rem !important; 
    margin-left: 40%;
    margin-top: 8%;
+   margin-left:auto;
+   margin-right: auto;
 }
 
-.StripeCheckout {
-    margin-left: 47%;
+
+.button-checkout {
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    width:100%
 }
