@@ -1,5 +1,5 @@
 {
-  "name": "roomatesV3",
+  "name": "roomatesV4",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -13,7 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
     "concurrently": "^6.0.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -21,6 +24,10 @@
     "morgan": "^1.10.0",
     "node-schedule": "^2.0.0",
     "nodemailer": "^6.5.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-stripe-checkout": "^2.6.3",
+    "react-toastify": "^7.0.4",
+    "stripe": "^8.145.0",
+    "uuid": "^8.3.2"
   }
 }
