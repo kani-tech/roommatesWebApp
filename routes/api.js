@@ -414,29 +414,46 @@ userRouter.post('/addroom', function (req, res) {
 userRouter.post('/getRooms', async function (req, res) {
     const email = req.body.email
     var rentPaid = []
+    var rentPaid2 = []
 
     user.find({ email: email }, async function (err, foundTenants) {
-        console.log(foundTenants[0].rooms)
-        const allrooms = foundTenants[0].rooms
+        console.log('tenants', foundTenants[0].rooms)
+        let allrooms = foundTenants[0].rooms
 
         for (let i = 0; i < allrooms.length; i++) {
             const currkey = allrooms[i].key
             console.log('key', currkey)
+            let room = [allrooms[i], true, []];
             await user.find({ roomKey: currkey }, function (err, foundMates) {
                 console.log('test', foundMates)
+                console.log('len', foundMates.length)
 
-                rentPaid.push(foundMates)
-                //console.log(rentPaid)
+                //console.log('mates', foundMates.length)
+                for (let n = 0; n < foundMates.length; ++n) {
+                    if (!foundMates[n].rentPaid) {
+                        console.log('oh yeah')
+                        room[1] = false;
+                    }
+                    room[2].push([foundMates[n].firstName, foundMates[n].rentPaid, foundMates[n].email])
+
+                }
 
             })
-        }
+            rentPaid2.push(room)
 
+            //console.log('rentPaid2', rentPaid2)
+
+            console.log(room, '123')
+        }
+        //console.log(allrooms)
+
+        console.log('final', rentPaid2)
         res.send(
             {
-                tenants: foundTenants[0],
-                rentPaid: rentPaid,
+                allrooms: rentPaid2,
+
             })
-
-
     })
 })
+
+

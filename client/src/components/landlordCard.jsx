@@ -39,7 +39,7 @@ function LandlordCard(props) {
                     <Modal.Header closeButton>
                         <Modal.Title>Roomkey {props.roomkey}</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Body>Payments: {props.payments}</Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Close

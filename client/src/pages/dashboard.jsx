@@ -13,6 +13,7 @@ import axios from 'axios'
 import Table from 'react-bootstrap/Table'
 import '../stylesheets/table.css'
 import '../stylesheets/landlordcard.css'
+import { RootRef } from '@material-ui/core'
 
 
 
@@ -24,6 +25,8 @@ function Dashboard() {
     const [roomies, setRoomies] = useState([])
     const [landlord, setlandlord] = useState(false)
     const [rooms, setRooms] = useState([]);
+    const [tenants, setTenants] = useState([]);
+
 
     setTimeout(function () {
         const currUser = JSON.parse(localStorage.getItem('user'));
@@ -78,7 +81,7 @@ function Dashboard() {
         localStorage.clear();
     };
 
-    useEffect(() => {
+    useEffect(async () => {
         if (!landlord) {
             return;
         }
@@ -95,31 +98,75 @@ function Dashboard() {
             })
 
             console.log(response.data)
-            setRooms(response.data.tenants.rooms)
+            setRooms(response.data.allrooms)
         }
 
-        getRooms()
+        await getRooms();
+
+
+
 
     }, [landlord])
 
+    const getTenants = async () => {
+        let avoiders = []
+        for (let i = 0; i < rooms.length; i++) {
+            for (let n = 0; n < rooms[i][2].length; n++) {
+                //console.log(rooms[i][2][n])
+                if (rooms[i][2][n].includes(false)) {
+                    avoiders.push([rooms[i][2][n]])
+                }
+            }
+
+        }
+        return avoiders
+    }
 
 
 
+
+    console.log('tenants', tenants)
     const renderCards = (rooms, index) => {
-        return (
-            <div className='landlordcard'>
-                <LandlordCard
-                    key={index}
-                    id={index}
-                    address={rooms.address}
-                    roomkey={rooms.key}
-                    rent={rooms.rent}
-                />
+        const avoiders = getTenants()
+        console.log('avoiders', avoiders)
 
-            </div>
-        )
+
+        if (rooms[1]) {
+            return (
+                <div className='landlordcard'>
+                    <LandlordCard
+                        key={index}
+                        id={index}
+                        address={rooms[0].address}
+                        roomkey={rooms[0].key}
+                        rent={rooms[0].rent}
+                        rentpaid={String(rooms[1]).slice(0, 1).toUpperCase() + String(rooms[1]).slice(1)}
+                        payments={'Everyone has paid'}
+                    />
+                </div>
+            )
+        } else {
+            return (
+                <div className='landlordcard'>
+                    <LandlordCard
+                        key={index}
+                        id={index}
+                        address={rooms[0].address}
+                        roomkey={rooms[0].key}
+                        rent={rooms[0].rent}
+                        rentpaid={String(rooms[1]).slice(0, 1).toUpperCase() + String(rooms[1]).slice(1)}
+                        payments={''}
+                    />
+                </div>
+            )
+
+        }
 
     }
+
+
+
+
 
     if (user === null) {
         return (
@@ -146,10 +193,6 @@ function Dashboard() {
                 </div>
             )
         }
-
-
-
-
 
     } else {
         return (
