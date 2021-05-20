@@ -15,7 +15,7 @@ a:hover {
 .btn-secondary:focus {
   color: #333;
   text-shadow: none; /* Prevent inheritance from `body` */
-  border: .05rem solid #fff;
+  border: 0.05rem solid #fff;
 }
 
 html {
@@ -24,7 +24,7 @@ html {
 
 body {
   height: 100%;
-  background-image: url("../images/home.jpg");
+  background-image: url('../images/home.jpg');
   background-size: cover;
   padding: 0;
 }
@@ -37,19 +37,17 @@ body {
   -webkit-box-pack: center;
   justify-content: center;
   box-shadow: inset 0 0 5rem rgb(255, 255, 255);
-  color: #fff;
+  color: black;
 }
 
 /* don't touch this -- FIRST PAGE */
 #box_home {
- margin: 0 auto;
- 
+  margin: 0 auto;
 }
 
 #home-btn {
   max-width: 80%;
   margin-bottom: 5%;
-  
 }
 
 .cover-heading {
@@ -76,11 +74,10 @@ body {
 .lead {
   text-align: center;
   font-size: 25px !important;
-
 }
 
 .text p {
-  color: whitesmoke; 
+  color: whitesmoke;
 }
 
 #text-log-in {
@@ -100,16 +97,16 @@ body {
 }
 
 .nav-masthead .nav-link {
-  padding: .25rem 0;
+  padding: 0.25rem 0;
   font-weight: 700;
-  color: rgba(255, 255, 255, .5);
+  color: rgba(255, 255, 255, 0.5);
   background-color: transparent;
-  border-bottom: .25rem solid transparent;
+  border-bottom: 0.25rem solid transparent;
 }
 
 .nav-masthead .nav-link:hover,
 .nav-masthead .nav-link:focus {
-  border-bottom-color: rgba(255, 255, 255, .25);
+  border-bottom-color: rgba(255, 255, 255, 0.25);
 }
 
 .nav-masthead .nav-link + .nav-link {
@@ -125,66 +122,65 @@ body {
   }
 }
 
-
 .user-login {
-    margin-top: 110%;
+  margin-top: 110%;
 }
 
-.user-reg{
+.user-reg {
   max-width: 90%;
   margin: 10 auto;
   margin-top: 55%;
 }
 
 .user__header {
-    text-align: center;
-    opacity: 0;
-    transform: translate3d(0, 500px, 0);
-    animation: arrive 100ms ease-in-out 0.7s forwards;
+  text-align: center;
+  opacity: 0;
+  transform: translate3d(0, 500px, 0);
+  animation: arrive 100ms ease-in-out 0.7s forwards;
 }
 
 .user__title {
-    font-size: 35px;
-    margin-bottom: -10px;
-    font-weight: 500;
-    color: black;
-} 
+  font-size: 35px;
+  margin-bottom: -10px;
+  font-weight: 500;
+  color: black;
+}
 
 .form {
-    margin-top: 40px;
-    border-radius: 6px;
-    overflow: hidden;
-    opacity: 0;
-    transform: translate3d(0, 500px, 0);
-    animation: arrive 900ms ease-in-out 0.9s forwards;
+  margin-top: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 500px, 0);
+  animation: arrive 900ms ease-in-out 0.9s forwards;
 }
 
 .form--no {
-    animation: NO 1s ease-in-out;
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+  animation: NO 1s ease-in-out;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .form__input {
-    display: block;
-    width: 100%;
-    padding: 20px;
-    -webkit-appearance: none;
-    border: 0;
-    outline: 0;
-    transition: 0.3s;
+  display: block;
+  width: 100%;
+  padding: 20px;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  transition: 0.3s;
 }
 
 .btn {
-    display: block;
-    width: 100%;
-    padding: 20px;
-    -webkit-appearance: none;
-    outline: 0;
-    border: 0;
-    color: white;
-    background: #ABA194;
-    transition: 0.3s;
+  display: block;
+  width: 100%;
+  padding: 20px;
+  -webkit-appearance: none;
+  outline: 0;
+  border: 0;
+  color: white;
+  background: #aba194;
+  transition: 0.3s;
 }
 
 .form__group {
@@ -192,44 +188,52 @@ body {
 }
 
 @keyframes NO {
-  from, to {
+  from,
+  to {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     -webkit-transform: translate3d(-10px, 0, 0);
     transform: translate3d(-10px, 0, 0);
   }
 
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     -webkit-transform: translate3d(10px, 0, 0);
     transform: translate3d(10px, 0, 0);
   }
 }
 
 @keyframes arrive {
-    0% {
-        opacity: 0;
-        transform: translate3d(0, 50px, 0);
-    }
-    
-    100% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 50px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 @keyframes move {
-    0% {
-        background-position: 0 0
-    }
+  0% {
+    background-position: 0 0;
+  }
 
-    50% {
-        background-position: 100% 0
-    }
+  50% {
+    background-position: 100% 0;
+  }
 
-    100% {
-        background-position: 0 0
-    }
+  100% {
+    background-position: 0 0;
+  }
 }
