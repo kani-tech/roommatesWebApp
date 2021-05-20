@@ -21,7 +21,7 @@ mongoose.connection.on('connected', () => {
   console.log('DB connected');
 });
 
-const PORT = process.env.PORT || 4000;
+const port = process.env.PORT || 5000;
 
 // Parse
 app.use(express.json());
@@ -36,10 +36,10 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
-app.listen(PORT, function (err) {
+app.listen(port, function (err) {
   if (err) {
     console.log(err);
   } else {
-    console.log(`server started on port ${PORT}`);
+    console.log(`server started on port ${port}`);
   }
 });
