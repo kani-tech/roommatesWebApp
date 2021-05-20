@@ -183,7 +183,7 @@ userRouter.post('/chore', async function (req, res) {
     return;
   } else {
     res.send({
-      token: 5318008,
+      token: 1,
     });
     return;
   }
