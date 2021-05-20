@@ -52,7 +52,7 @@ function Addroom() {
         }
 
         const response = await axios({
-            url: 'http://localhost:4000/api/addroom',
+            url: '/api/addroom',
             method: 'post',
             data: payload
         })

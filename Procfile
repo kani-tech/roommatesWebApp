@@ -1,1 +1,0 @@
-web: concurrently -n 'server, client' -c 'green, yellow' \"nodemon server.js\" \"npm run client\"
