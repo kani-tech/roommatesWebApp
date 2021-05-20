@@ -5,14 +5,14 @@ const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
 const userRouter = require('./routes/api.js');
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 // HTTP request logger
 app.use(morgan('tiny'));
 
 let connect = process.env.MONGODB_URL || 'mongodb://localhost:27017/propManage';
 
-mongoose.connect(connect, {
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
