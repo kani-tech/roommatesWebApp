@@ -100,7 +100,7 @@ function ChoresTDL() {
     }
     getChores();
     getToDos();
-  }, [roomKey, flipper]);
+  }, [roomKey, flipper, chores, items]);
 
   console.log(flipper);
 
