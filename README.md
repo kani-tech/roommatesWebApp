@@ -19,3 +19,4 @@ The Rommmates Web App allows tenants to connect with their roommmates and landlo
 
 
 BUILT USING MERN
+hosted on http://hak-roommates.herokuapp.com
