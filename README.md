@@ -1,6 +1,6 @@
 # roomatesWebApp
  
-The Rommmates Web App allows tenants to connect with their roommmates and landlords complete with BCrypt authentication
+The Rommmates Web App allows tenants to connect with their roommmates and landlords complete with bcrypt authentication
 
 **Tenant Features:**
 - See roommates contact information and communication pipeline
@@ -15,8 +15,9 @@ The Rommmates Web App allows tenants to connect with their roommmates and landlo
 - Track payments for each indivdual property from one place
 - Seamlessly add properties to your profile and add new tenants to it
 - Easily communicate with tenant
-- Boost your efficiecny and productivity
+- Boost your efficiency and productivity
 
 
 BUILT USING MERN
-hosted on http://hak-roommates.herokuapp.com
+
+Hosted on http://hak-roommates.herokuapp.com
