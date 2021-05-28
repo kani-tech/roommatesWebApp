@@ -83,7 +83,7 @@ function ChoresTDL() {
       };
       async function getToDos() {
         const response = await axios({
-          url: 'http://localhost:4000/api/toDoDisplay',
+          url: '/api/toDoDisplay',
           method: 'post',
           data: payload,
         });
@@ -92,7 +92,7 @@ function ChoresTDL() {
 
       async function getChores() {
         const response = await axios({
-          url: 'http://localhost:4000/api/choresDisplay',
+          url: '/api/choresDisplay',
           method: 'post',
           data: payload,
         });
