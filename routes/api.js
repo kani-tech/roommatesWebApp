@@ -141,6 +141,7 @@ userRouter.post('/login', async function (req, res) {
           name: foundUser.firstName,
           roomKey: foundUser.roomKey,
           landlord: foundUser.landlord,
+          rentPaid: foundUser.rentPaid,
         });
       } else {
         res.send({

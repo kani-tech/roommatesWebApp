@@ -14,7 +14,7 @@ toast.configure();
 function PayRent() {
   const [roomKey, setRoomKey] = useState('');
   const [user, setUser] = useState('');
-  const [rent, setRent] = useState(0);
+  const [rent, setRent] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -23,7 +23,11 @@ function PayRent() {
     if (currUser) {
       setUser(currUser.name);
       setRoomKey(currUser.roomKey);
-      setRent(600);
+      if (currUser.rentPaid) {
+        setRent(0);
+      } else {
+        setRent(600);
+      }
       setEmail(currUser.email);
     } else {
       setUser(null);
@@ -31,7 +35,6 @@ function PayRent() {
   }, 1);
 
   const schedule = require('node-schedule');
-
   const job = schedule.scheduleJob('0 0 0 1 * *', async function () {
     async function resetRent() {
       let roomies = 1;
@@ -67,6 +70,10 @@ function PayRent() {
     const {status} = response.data;
     if (status === 'success') {
       toast.success('Payment Received!! Check your email for details');
+      let localUser = JSON.parse(localStorage.getItem('user'));
+      localUser['rentPaid'] = true;
+      console.log(localUser);
+      localStorage.setItem('user', JSON.stringify(localUser));
     } else {
       toast.error('Uh oh something went wrong');
     }
@@ -74,7 +81,7 @@ function PayRent() {
   return (
     <div>
       <MyNavBar logout={handleLogout} />
-      <RentCard rent={600} date={'April 30th, 2021'} />
+      <RentCard rent={rent} date={'May 30th, 2021'} />
       <div className="button-checkout">
         <StripeCheckout
           stripeKey="pk_test_51IlJLyHixsK8VUAY3QUDK5bIxd742as0tLWZmmNh8493DuOyxoEFrAk5aFhWYanPz8SUlbKYcg95Wh7DkfydSzPV008XPcmnCe"

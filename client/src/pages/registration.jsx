@@ -40,6 +40,7 @@ function RegistrationScreen() {
       Email: email,
       Password: password,
       Landlord: landlord,
+      rentPaid: false,
     };
 
     const response = await axios({
