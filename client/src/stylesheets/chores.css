@@ -1,6 +1,7 @@
 .form_cl {
-    margin-top: -5%;
-    margin-left: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 .form_td {
@@ -8,5 +9,7 @@
 }
 
 .chores_list {
-    margin-left: 15%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }

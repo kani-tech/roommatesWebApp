@@ -75,19 +75,20 @@ function ChoresTDL() {
   });
 
   useEffect(() => {
-    console.log(10000);
-    console.log(flipper);
-    const payload = {
-      roomkey: roomKey,
-    };
-    async function getToDos() {
-      const response = await axios({
-        url: '/api/toDoDisplay',
-        method: 'post',
-        data: payload,
-      });
-      setItems(response.data.items);
-    }
+    const interval = setInterval(() => {
+      console.log(10000);
+      console.log(flipper);
+      const payload = {
+        roomkey: roomKey,
+      };
+      async function getToDos() {
+        const response = await axios({
+          url: '/api/toDoDisplay',
+          method: 'post',
+          data: payload,
+        });
+        setItems(response.data.items);
+      }
 
     async function getChores() {
       const response = await axios({
